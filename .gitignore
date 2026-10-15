@@ -1,0 +1,26 @@
+# CMake build directories
+build/
+cmake-build-*/
+
+# Compiled object files
+*.o
+*.obj
+
+# Compiled binaries and libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# Debug symbols
+*.pdb
+
+# Visual Studio Code local settings
+.vscode/*
+!.vscode/extensions.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
