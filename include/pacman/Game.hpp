@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Clock.hpp>
 
 #include "pacman/Player.hpp"
 
@@ -17,5 +18,6 @@ class Game {
 
         sf::RenderWindow window;
         Player player;
+        sf::Clock clock;
 
 };

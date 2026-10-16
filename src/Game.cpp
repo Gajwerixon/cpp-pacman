@@ -46,6 +46,8 @@ void Game::render() {
 
 void Game::update() {
 
+    float deltaTime = clock.restart().asSeconds();
 
+    player.update(deltaTime);
 
 }
