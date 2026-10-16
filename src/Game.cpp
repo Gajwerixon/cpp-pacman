@@ -35,10 +35,7 @@ void Game::render() {
 
     window.clear(sf::Color::Black);
 
-    sf::CircleShape player(20.f);
-    player.setFillColor(sf::Color::Yellow);
-    player.setPosition(10.f, 10.f);
-    window.draw(player);
+    player.render(window);
 
     window.display();
 

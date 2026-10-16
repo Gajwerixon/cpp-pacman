@@ -10,6 +10,7 @@ find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
 add_executable(Pacman
     src/main.cpp
     src/Game.cpp
+    src/Player.cpp
 )
 
 target_link_libraries(Pacman PRIVATE

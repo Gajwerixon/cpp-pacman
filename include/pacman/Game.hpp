@@ -2,9 +2,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
+
+#include "pacman/Player.hpp"
 
 class Game {
+
     public:
         void run();
 
@@ -13,5 +15,7 @@ class Game {
         void update();
         void render();
 
-        sf::RenderWindow window;   
+        sf::RenderWindow window;
+        Player player;
+
 };
