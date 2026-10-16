@@ -10,8 +10,8 @@ This is a learning project focused on improving C++ programming skills, practici
 - Practice Git branching, meaningful commits, and version control.
 
 ## Development Plan
-1. [ ] Set up the project structure and build system.
-2. [ ] Create an SFML window and the main game loop.
+1. [X] Set up the project structure and build system.
+2. [X] Create an SFML window and the main game loop.
 3. [ ] Implement the game map and player movement.
 4. [ ] Add walls, collectibles, and collision detection.
 5. [ ] Implement ghosts and basic enemy behaviour.
