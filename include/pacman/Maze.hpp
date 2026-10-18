@@ -19,6 +19,7 @@ class Maze {
     private:
         std::vector<std::string> mazeLayout;
         int tileSize = 24;
+        int offsetX = 3;
 
         std::vector<sf::RectangleShape> walls;
         std::vector<sf::CircleShape> dots;
