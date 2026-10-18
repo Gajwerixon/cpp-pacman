@@ -74,17 +74,41 @@ void Maze::createMaze() {
 }
 
 void Maze::createWall(std::size_t row, std::size_t col) {
-    // Create wall
+    
+    sf::RectangleShape wall;
+    wall.setSize(sf::Vector2f(tileSize, tileSize));
+    wall.setFillColor(sf::Color::Blue);
+    wall.setPosition(sf::Vector2f((col * tileSize), (row * tileSize)));
+    walls.push_back(wall);
+
 }
 
 void Maze::createDot(std::size_t row, std::size_t col) {
-    // Create wall
+    
+    sf::CircleShape dot;
+    dot.setRadius(4.f);
+    dot.setFillColor(sf::Color::White);
+    dot.setPosition(sf::Vector2f(
+        ((col * tileSize) + tileSize / 2 - dot.getRadius()), 
+        ((row * tileSize) + tileSize / 2 - dot.getRadius()))
+    );
+    dots.push_back(dot);
+
 }
 
 void Maze::createEnergizer(std::size_t row, std::size_t col) {
-    // Create wall
+    
+    sf::CircleShape energizer;
+    energizer.setRadius(8.f);
+    energizer.setFillColor(sf::Color::White);
+    energizer.setPosition(sf::Vector2f(
+        ((col * tileSize) + tileSize / 2 - energizer.getRadius()), 
+        ((row * tileSize) + tileSize / 2 - energizer.getRadius()))
+    );
+    energizers.push_back(energizer);
+
 }
 
 void Maze::setPacmanStart(std::size_t row, std::size_t col) {
-    // Create wall
+    pacmanStart = sf::Vector2i(col, row);
 }
