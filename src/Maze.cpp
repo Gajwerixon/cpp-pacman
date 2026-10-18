@@ -92,7 +92,7 @@ void Maze::createWall(std::size_t row, std::size_t col) {
     wall.setFillColor(sf::Color::Blue);
     wall.setPosition(sf::Vector2f(
         (col * tileSize), 
-        ((row * tileSize) + offsetX * tileSize)
+        ((row * tileSize) + offsetY * tileSize)
     ));
     walls.push_back(wall);
 
@@ -105,7 +105,7 @@ void Maze::createDot(std::size_t row, std::size_t col) {
     dot.setFillColor(sf::Color::White);
     dot.setPosition(sf::Vector2f(
         ((col * tileSize) + tileSize / 2 - dot.getRadius()), 
-        ((row * tileSize) + tileSize / 2 - dot.getRadius() + offsetX * tileSize )
+        ((row * tileSize) + tileSize / 2 - dot.getRadius() + offsetY * tileSize )
     ));
     dots.push_back(dot);
 
@@ -118,7 +118,7 @@ void Maze::createEnergizer(std::size_t row, std::size_t col) {
     energizer.setFillColor(sf::Color::White);
     energizer.setPosition(sf::Vector2f(
         ((col * tileSize) + tileSize / 2 - energizer.getRadius()), 
-        ((row * tileSize) + tileSize / 2 - energizer.getRadius() + offsetX * tileSize)
+        ((row * tileSize) + tileSize / 2 - energizer.getRadius() + offsetY * tileSize)
     ));
     energizers.push_back(energizer);
 
