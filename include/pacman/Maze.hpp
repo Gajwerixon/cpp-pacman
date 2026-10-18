@@ -1,0 +1,30 @@
+#pragma once
+
+#include <vector>
+#include <string>
+#include <iostream>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
+
+class Maze {
+
+    public:
+        Maze();
+
+        void render(sf::RenderWindow& window);
+
+    private:
+        std::vector<std::string> mazeLayout;
+        int titleSize = 24;
+
+        std::vector<sf::RectangleShape> walls;
+        std::vector<sf::CircleShape> dots;
+        std::vector<sf::CircleShape> energizers;
+
+        sf::Vector2i pacmanStart;
+
+        void createMaze();
+};
