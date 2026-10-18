@@ -27,4 +27,9 @@ class Maze {
         sf::Vector2i pacmanStart;
 
         void createMaze();
+        void createWall(std::size_t row, std::size_t col);
+        void createDot(std::size_t row, std::size_t col);
+        void createEnergizer(std::size_t row, std::size_t col);
+        void setPacmanStart(std::size_t row, std::size_t col);
+
 };
