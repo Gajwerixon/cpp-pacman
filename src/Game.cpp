@@ -36,6 +36,7 @@ void Game::render() {
 
     window.clear(sf::Color::Black);
 
+    maze.render(window);
     player.render(window);
 
     window.display();

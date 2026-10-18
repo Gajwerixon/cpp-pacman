@@ -41,6 +41,18 @@ Maze::Maze()
 
 void Maze::render(sf::RenderWindow& window) {
 
+    for (const sf::RectangleShape& wall : walls) {
+        window.draw(wall);
+    }
+
+    for (const sf::CircleShape& dot : dots) {
+        window.draw(dot);
+    }
+
+    for (const sf::CircleShape& energizer : energizers) {
+        window.draw(energizer);
+    }
+
 };
 
 void Maze::createMaze() {
