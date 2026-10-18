@@ -5,6 +5,7 @@
 #include <SFML/System/Clock.hpp>
 
 #include "pacman/Player.hpp"
+#include "Maze.hpp"
 
 class Game {
 
@@ -13,11 +14,12 @@ class Game {
 
     private:
         void processEvents();
-        void update();
         void render();
+        void update();
 
         sf::RenderWindow window;
         Player player;
         sf::Clock clock;
+        Maze maze;
 
 };

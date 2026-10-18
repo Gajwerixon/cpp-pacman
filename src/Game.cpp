@@ -1,6 +1,5 @@
 #include "pacman/Game.hpp"
 
-
 void Game::run() {
     window.create(sf::VideoMode(672, 864), "Pac-Man");
 
