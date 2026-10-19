@@ -12,6 +12,7 @@ class Player {
         sf::CircleShape shape;
         sf::Vector2f direction;
         float speed = 100.f;
+        sf::Vector2i tilePosition;
     
     public:
         Player();
@@ -20,4 +21,5 @@ class Player {
         void render(sf::RenderWindow& window);
         void update(float deltaTime);
 
+        void setStartPosition(sf::Vector2i start);
 };

@@ -1,5 +1,10 @@
 #include "pacman/Game.hpp"
 
+Game::Game() {
+    player.setStartPosition(maze.getPacmanStart());
+};
+
+
 void Game::run() {
     window.create(sf::VideoMode(672, 864), "Pac-Man");
 

@@ -127,3 +127,7 @@ void Maze::createEnergizer(std::size_t row, std::size_t col) {
 void Maze::setPacmanStart(std::size_t row, std::size_t col) {
     pacmanStart = sf::Vector2i(col, row);
 }
+
+sf::Vector2i Maze::getPacmanStart() const {
+    return pacmanStart;
+};

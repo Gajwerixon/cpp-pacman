@@ -10,6 +10,7 @@
 class Game {
 
     public:
+        Game();
         void run();
 
     private:
@@ -18,8 +19,8 @@ class Game {
         void update();
 
         sf::RenderWindow window;
-        Player player;
         sf::Clock clock;
         Maze maze;
+        Player player;
 
 };

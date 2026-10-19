@@ -2,7 +2,7 @@
 
 
 Player::Player()
-    : shape(20.f),
+    : shape(12.f),
       direction(1.f, 0.f) 
 
 {
@@ -46,4 +46,9 @@ void Player::update(float deltaTime) {
         direction.y * speed * deltaTime
     );
 
+}
+
+
+void Player::setStartPosition(sf::Vector2i start) {
+    tilePosition = start;
 }

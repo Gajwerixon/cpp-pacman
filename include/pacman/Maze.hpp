@@ -15,6 +15,7 @@ class Maze {
         Maze();
 
         void render(sf::RenderWindow& window);
+        sf::Vector2i getPacmanStart() const;
 
     private:
         std::vector<std::string> mazeLayout;
