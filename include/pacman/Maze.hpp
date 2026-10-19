@@ -16,6 +16,7 @@ class Maze {
 
         void render(sf::RenderWindow& window);
         sf::Vector2i getPacmanStart() const;
+        sf::Vector2f calculateScreenPosition(sf::Vector2i tilePosition);
 
     private:
         std::vector<std::string> mazeLayout;

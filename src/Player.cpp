@@ -7,7 +7,7 @@ Player::Player()
 
 {
     shape.setFillColor(sf::Color::Yellow);
-    shape.setPosition(20.f, 20.f);
+    shape.setOrigin(12.f, 12.f);
 }
 
 
@@ -49,6 +49,8 @@ void Player::update(float deltaTime) {
 }
 
 
-void Player::setStartPosition(sf::Vector2i start) {
+void Player::setStartPosition(sf::Vector2i start, sf::Vector2f screenPosition) {
     tilePosition = start;
+    screenPosition = screenPosition;
+    shape.setPosition(screenPosition);
 }

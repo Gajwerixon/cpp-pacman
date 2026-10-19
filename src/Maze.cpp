@@ -131,3 +131,10 @@ void Maze::setPacmanStart(std::size_t row, std::size_t col) {
 sf::Vector2i Maze::getPacmanStart() const {
     return pacmanStart;
 };
+
+sf::Vector2f Maze::calculateScreenPosition(sf::Vector2i tilePosition) {
+    sf::Vector2f position;
+    position.x = tilePosition.x * tileSize + tileSize / 2;
+    position.y = tilePosition.y * tileSize + offsetY * tileSize + tileSize / 2;
+    return position;
+};

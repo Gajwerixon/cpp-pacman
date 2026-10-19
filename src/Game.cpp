@@ -1,7 +1,10 @@
 #include "pacman/Game.hpp"
 
 Game::Game() {
-    player.setStartPosition(maze.getPacmanStart());
+    player.setStartPosition(
+        maze.getPacmanStart(), 
+        maze.calculateScreenPosition(maze.getPacmanStart())
+    );
 };
 
 
