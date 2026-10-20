@@ -6,14 +6,21 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include <cmath>
+#include <iostream>
+
 class Player {
 
     private:
         sf::CircleShape shape;
-        sf::Vector2f direction;
-        float speed = 100.f;
+
+        sf::Vector2f currentDirection;
+        sf::Vector2f requestedDirection;
+
         sf::Vector2i tilePosition;
         sf::Vector2f screenPosition;
+
+        float speed;
     
     public:
         Player();
@@ -22,5 +29,8 @@ class Player {
         void render(sf::RenderWindow& window);
         void update(float deltaTime);
 
-        void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPositon);
+        void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f startScreenPosition);
+
+        bool isAtTileCenter(sf::Vector2f tileCenter);
+        
 };

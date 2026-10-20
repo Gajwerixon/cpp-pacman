@@ -3,7 +3,8 @@
 
 Player::Player()
     : shape(12.f),
-      direction(1.f, 0.f) 
+      currentDirection(1.f, 0.f),
+      speed(12.f)
 
 {
     shape.setFillColor(sf::Color::Yellow);
@@ -16,15 +17,15 @@ void Player::handleEvents(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
 
         if (event.key.code == sf::Keyboard::Up) {
-            direction = sf::Vector2f(0.f, -1.f);
+            currentDirection = sf::Vector2f(0.f, -1.f);
         } else if (event.key.code == sf::Keyboard::Right) {
-            direction = sf::Vector2f(1.f, 0.f);
+            currentDirection = sf::Vector2f(1.f, 0.f);
         }
         else if (event.key.code == sf::Keyboard::Down) {
-            direction = sf::Vector2(0.f, 1.f);
+            currentDirection = sf::Vector2(0.f, 1.f);
         }
         else if (event.key.code == sf::Keyboard::Left) {
-            direction = sf::Vector2f(-1.f, 0.f);
+            currentDirection = sf::Vector2f(-1.f, 0.f);
         }
  
     }
@@ -41,16 +42,27 @@ void Player::render(sf::RenderWindow& window) {
 
 void Player::update(float deltaTime) {
 
-    shape.move(
-        direction.x * speed * deltaTime,
-        direction.y * speed * deltaTime
-    );
+    screenPosition.x += currentDirection.x * speed * deltaTime;
+    screenPosition.y += currentDirection.y * speed * deltaTime;
+
+    shape.setPosition(screenPosition);
 
 }
 
 
-void Player::setStartPosition(sf::Vector2i start, sf::Vector2f screenPosition) {
+void Player::setStartPosition(sf::Vector2i start, sf::Vector2f startScreenPosition) {
+
     tilePosition = start;
-    screenPosition = screenPosition;
+    screenPosition = startScreenPosition;
     shape.setPosition(screenPosition);
+
+}
+
+
+bool Player::isAtTileCenter(sf::Vector2f tileCenter) {
+
+    int toleration = 8;
+    return std::abs(tileCenter.x - screenPosition.x) < toleration &&
+       std::abs(tileCenter.y - screenPosition.y) < toleration;
+
 }
