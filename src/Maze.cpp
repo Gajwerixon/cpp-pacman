@@ -39,6 +39,7 @@ Maze::Maze()
         createMaze();
     };
 
+
 void Maze::render(sf::RenderWindow& window) {
 
     for (const sf::RectangleShape& wall : walls) {
@@ -54,6 +55,7 @@ void Maze::render(sf::RenderWindow& window) {
     }
 
 };
+
 
 void Maze::createMaze() {
 
@@ -85,6 +87,7 @@ void Maze::createMaze() {
 
 }
 
+
 void Maze::createWall(std::size_t row, std::size_t col) {
     
     sf::RectangleShape wall;
@@ -97,6 +100,7 @@ void Maze::createWall(std::size_t row, std::size_t col) {
     walls.push_back(wall);
 
 }
+
 
 void Maze::createDot(std::size_t row, std::size_t col) {
     
@@ -111,6 +115,7 @@ void Maze::createDot(std::size_t row, std::size_t col) {
 
 }
 
+
 void Maze::createEnergizer(std::size_t row, std::size_t col) {
     
     sf::CircleShape energizer;
@@ -124,17 +129,32 @@ void Maze::createEnergizer(std::size_t row, std::size_t col) {
 
 }
 
+
 void Maze::setPacmanStart(std::size_t row, std::size_t col) {
     pacmanStart = sf::Vector2i(col, row);
 }
+
 
 sf::Vector2i Maze::getPacmanStart() const {
     return pacmanStart;
 };
 
+
 sf::Vector2f Maze::calculateScreenPosition(sf::Vector2i tilePosition) {
-    sf::Vector2f position;
-    position.x = tilePosition.x * tileSize + tileSize / 2;
-    position.y = tilePosition.y * tileSize + offsetY * tileSize + tileSize / 2;
-    return position;
+    
+    sf::Vector2f screenPostion;
+    screenPostion.x = tilePosition.x * tileSize + tileSize / 2;
+    screenPostion.y = tilePosition.y * tileSize + offsetY * tileSize + tileSize / 2;
+    return screenPostion;
+
 };
+
+
+sf::Vector2i Maze::calculateTilePosition(sf::Vector2f screenPosition) {
+
+    sf::Vector2i tilePosition;
+    tilePosition.x = (screenPosition.x - tileSize / 2) / tileSize;
+    tilePosition.y = (screenPosition.y - tileSize / 2 - offsetY * tileSize) / tileSize;
+    return tilePosition;
+
+}

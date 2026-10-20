@@ -18,6 +18,8 @@ class Maze {
         sf::Vector2i getPacmanStart() const;
         sf::Vector2f calculateScreenPosition(sf::Vector2i tilePosition);
 
+        sf::Vector2i calculateTilePosition(sf::Vector2f screenPosition);
+
     private:
         std::vector<std::string> mazeLayout;
         int tileSize = 24;
