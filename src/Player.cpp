@@ -57,3 +57,8 @@ void Player::setStartPosition(sf::Vector2i start, sf::Vector2f startScreenPositi
     shape.setPosition(screenPosition);
 
 }
+
+
+sf::Vector2f Player::getScreenPosition() const {
+    return screenPosition;
+}
