@@ -67,3 +67,8 @@ sf::Vector2f Player::getScreenPosition() const {
 void Player::setTilePosition(sf::Vector2i newTilePosition) {
     tilePosition = newTilePosition;
 }
+
+
+sf::Vector2i Player::getTilePosition() const {
+    return tilePosition;
+}

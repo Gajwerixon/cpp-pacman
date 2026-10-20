@@ -33,4 +33,6 @@ class Player {
         
         sf::Vector2f getScreenPosition() const;
         void setTilePosition(sf::Vector2i newTilePosition);
+
+        sf::Vector2i getTilePosition() const;
 };
