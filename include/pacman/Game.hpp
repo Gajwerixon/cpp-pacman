@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Clock.hpp>
@@ -23,4 +25,5 @@ class Game {
         Maze maze;
         Player player;
 
+        void updatePlayer(float deltaTime);
 };

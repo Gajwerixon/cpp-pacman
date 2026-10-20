@@ -56,6 +56,26 @@ void Game::update() {
 
     float deltaTime = clock.restart().asSeconds();
 
+    updatePlayer(deltaTime);
+
+}
+
+
+void Game::updatePlayer(float deltaTime) {
+
     player.update(deltaTime);
+
+    // Get player current screenPosition
+    sf::Vector2f screenPostion = player.getScreenPosition();
+
+    // Calculate current player tilePosition
+    sf::Vector2i tilePosition = maze.calculateTilePosition(screenPostion);
+
+    // If the current tile position is diffrent => Set the new player tile position
+    if (tilePosition != player.getTilePosition()) {
+        std::cout << player.getTilePosition().x << " " << player.getTilePosition().y << "\n";
+        std::cout << tilePosition.x << " " << tilePosition.y << "\n";
+        player.setTilePosition(tilePosition);
+    }
 
 }
