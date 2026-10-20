@@ -30,7 +30,5 @@ class Player {
         void update(float deltaTime);
 
         void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f startScreenPosition);
-
-        bool isAtTileCenter(sf::Vector2f tileCenter);
         
 };

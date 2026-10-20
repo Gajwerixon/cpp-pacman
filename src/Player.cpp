@@ -57,12 +57,3 @@ void Player::setStartPosition(sf::Vector2i start, sf::Vector2f startScreenPositi
     shape.setPosition(screenPosition);
 
 }
-
-
-bool Player::isAtTileCenter(sf::Vector2f tileCenter) {
-
-    int toleration = 8;
-    return std::abs(tileCenter.x - screenPosition.x) < toleration &&
-       std::abs(tileCenter.y - screenPosition.y) < toleration;
-
-}
