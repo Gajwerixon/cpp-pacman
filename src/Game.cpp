@@ -73,8 +73,6 @@ void Game::updatePlayer(float deltaTime) {
 
     // If the current tile position is diffrent => Set the new player tile position
     if (tilePosition != player.getTilePosition()) {
-        std::cout << player.getTilePosition().x << " " << player.getTilePosition().y << "\n";
-        std::cout << tilePosition.x << " " << tilePosition.y << "\n";
         player.setTilePosition(tilePosition);
     }
 
