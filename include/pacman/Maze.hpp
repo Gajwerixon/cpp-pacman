@@ -19,6 +19,7 @@ class Maze {
         sf::Vector2f calculateScreenPosition(sf::Vector2i tilePosition);
 
         sf::Vector2i calculateTilePosition(sf::Vector2f screenPosition);
+        sf::Vector2f calculateTileCenter(sf::Vector2i tilePosition);
 
     private:
         std::vector<std::string> mazeLayout;

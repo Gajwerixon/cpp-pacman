@@ -158,3 +158,13 @@ sf::Vector2i Maze::calculateTilePosition(sf::Vector2f screenPosition) {
     return tilePosition;
 
 }
+
+
+sf::Vector2f Maze::calculateTileCenter(sf::Vector2i tilePosition) {
+
+    sf::Vector2f tileCenter;
+    tileCenter.x = (tilePosition.x * tileSize) + tileSize / 2;
+    tileCenter.y = (tilePosition.y * tileSize) + (offsetY * tileSize) + tileSize / 2;
+    return tileCenter;
+
+}
