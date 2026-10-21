@@ -4,7 +4,7 @@
 Player::Player()
     : shape(12.f),
       currentDirection(1.f, 0.f),
-      speed(12.f)
+      speed(6.f)
 
 {
     shape.setFillColor(sf::Color::Yellow);
@@ -71,4 +71,16 @@ void Player::setTilePosition(sf::Vector2i newTilePosition) {
 
 sf::Vector2i Player::getTilePosition() const {
     return tilePosition;
+}
+
+
+bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
+
+    float tolerance = 2.f;
+
+    float positionX = std::abs(screenPosition.x - tileCenter.x);
+    float positionY = std::abs(screenPosition.y - tileCenter.y);
+
+    return positionX < tolerance && positionY < tolerance;
+
 }

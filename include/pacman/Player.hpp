@@ -35,4 +35,6 @@ class Player {
         void setTilePosition(sf::Vector2i newTilePosition);
 
         sf::Vector2i getTilePosition() const;
+
+        bool isAtTileCenter(sf::Vector2f tileCenter) const; 
 };
