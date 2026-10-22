@@ -77,7 +77,14 @@ void Game::updatePlayer(float deltaTime) {
 
     // Check if the player has reached the tile center
     if (player.isAtTileCenter(tileCenter)) {
-        std::cout << "I am at tile center!";
+        
+        std::vector<sf::Vector2i> avalibleDirections = maze.getAvalibleDirections(tilePosition);
+
+        for (sf::Vector2i& direction : avalibleDirections) {
+            std::cout << "(" << direction.x << ", " << direction.y << ")" << " ";
+        }
+        std::cout << "\n";
+
     }
 
 }

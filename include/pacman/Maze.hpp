@@ -21,6 +21,8 @@ class Maze {
         sf::Vector2i calculateTilePosition(sf::Vector2f screenPosition);
         sf::Vector2f calculateTileCenter(sf::Vector2i tilePosition);
 
+        std::vector<sf::Vector2i> getAvalibleDirections(sf::Vector2i tilePosition);
+
     private:
         std::vector<std::string> mazeLayout;
         int tileSize = 24;

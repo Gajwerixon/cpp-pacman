@@ -168,3 +168,31 @@ sf::Vector2f Maze::calculateTileCenter(sf::Vector2i tilePosition) {
     return tileCenter;
 
 }
+
+
+std::vector<sf::Vector2i> Maze::getAvalibleDirections(sf::Vector2i tilePosition) {
+
+    std::vector<sf::Vector2i> directions = {
+        {0, -1},
+        {1, 0},
+        {0, 1},
+        {-1, 0}
+    };
+    std::vector<sf::Vector2i> avalibleDirections;
+
+    // Loop for every direction
+    for (const sf::Vector2i& direction : directions) {
+
+        // Create newTilePosition
+        sf::Vector2i newTilePosition = tilePosition + direction;
+
+        // If on the newPosition is not a wall
+        if (mazeLayout[newTilePosition.y][newTilePosition.x] != '#') {
+            avalibleDirections.push_back(direction);
+        };
+
+    }
+
+    return avalibleDirections;
+
+}
