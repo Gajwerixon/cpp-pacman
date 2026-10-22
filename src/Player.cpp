@@ -5,7 +5,7 @@ Player::Player()
     : shape(12.f),
       currentDirection(1, 0),
       requestedDirection(1, 0),
-      speed(20.f)
+      speed(80.f)
 
 {
     shape.setFillColor(sf::Color::Yellow);
@@ -90,19 +90,14 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 void Player::checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections) {
 
     if (currentDirection == requestedDirection) {
-
         if(!canMoveInDirection(currentDirection, avalibleDirections)) {
-            currentDirection = sf::Vector2i(0, 0);
-        }
-
+            currentDirection = sf::Vector2i(0, 0);        }
     }
     
     else {
-
         if (canMoveInDirection(requestedDirection, avalibleDirections)) {
             currentDirection = requestedDirection;
         }
-
     }
 
 }
@@ -116,6 +111,37 @@ bool Player::canMoveInDirection(
     return std::find(
         avalibleDirections.begin(),
         avalibleDirections.end(),
-        direction) == avalibleDirections.begin();
+        direction) != avalibleDirections.end();
+
+}
+
+
+void Player::alignToTileCenter(sf::Vector2f tileCenter) {
+
+    if (requestedDirection.x != 0) {
+        tilePosition.x = tileCenter.x;
+    }
+
+    if (requestedDirection.y != 0) {
+        tilePosition.y = tileCenter.y;
+    }
+
+}
+
+
+bool Player::changesMovementAxis() const {
+    
+    bool isStopped =
+    currentDirection.x == 0 && currentDirection.y == 0;
+
+    bool changesAxis =
+        (currentDirection.x != 0 && requestedDirection.y != 0) ||
+        (currentDirection.y != 0 && requestedDirection.x != 0);
+
+    if (isStopped || changesAxis) {
+        return true;
+    }
+
+    return false;
 
 }

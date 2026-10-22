@@ -75,8 +75,13 @@ void Game::updatePlayer(float deltaTime) {
 
     if (player.isAtTileCenter(tileCenter)) {
 
-        std::vector<sf::Vector2i> avalibleDirections = maze.getAvalibleDirections(tilePosition);
-        player.checkAvalibleDirections(avalibleDirections);
+        player.checkAvalibleDirections(maze.getAvalibleDirections(tilePosition));
+
+        auto directions = maze.getAvalibleDirections(tilePosition);
+
+        if (player.changesMovementAxis()) {
+            player.alignToTileCenter(tileCenter);
+        }
 
     }
 

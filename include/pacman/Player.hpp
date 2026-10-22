@@ -45,4 +45,8 @@ class Player {
         bool isAtTileCenter(sf::Vector2f tileCenter) const;
         
         void checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections);
+
+        bool changesMovementAxis() const;
+
+        void alignToTileCenter(sf::Vector2f tileCenter);
 };
