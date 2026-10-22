@@ -140,7 +140,7 @@ sf::Vector2i Maze::getPacmanStart() const {
 };
 
 
-sf::Vector2f Maze::calculateScreenPosition(sf::Vector2i tilePosition) {
+sf::Vector2f Maze::getScreenPosition(sf::Vector2i tilePosition) {
     
     sf::Vector2f screenPostion;
     screenPostion.x = tilePosition.x * tileSize + tileSize / 2;
@@ -150,7 +150,7 @@ sf::Vector2f Maze::calculateScreenPosition(sf::Vector2i tilePosition) {
 };
 
 
-sf::Vector2i Maze::calculateTilePosition(sf::Vector2f screenPosition) {
+sf::Vector2i Maze::getTilePosition(sf::Vector2f screenPosition) {
 
     sf::Vector2i tilePosition;
     tilePosition.x = screenPosition.x / tileSize;
@@ -160,7 +160,7 @@ sf::Vector2i Maze::calculateTilePosition(sf::Vector2f screenPosition) {
 }
 
 
-sf::Vector2f Maze::calculateTileCenter(sf::Vector2i tilePosition) {
+sf::Vector2f Maze::getTileCenter(sf::Vector2i tilePosition) {
 
     sf::Vector2f tileCenter;
     tileCenter.x = (tilePosition.x * tileSize) + tileSize / 2;
@@ -170,7 +170,7 @@ sf::Vector2f Maze::calculateTileCenter(sf::Vector2i tilePosition) {
 }
 
 
-std::vector<sf::Vector2i> Maze::getAvalibleDirections(sf::Vector2i tilePosition) {
+std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition) {
 
     std::vector<sf::Vector2i> directions = {
         {0, -1},
