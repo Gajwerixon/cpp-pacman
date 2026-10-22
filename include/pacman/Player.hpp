@@ -17,6 +17,7 @@ class Player {
 
         sf::Vector2i currentDirection;
         sf::Vector2i requestedDirection;
+        sf::Vector2i lastDirection;
 
         sf::Vector2i tilePosition;
         sf::Vector2f screenPosition;
@@ -44,9 +45,13 @@ class Player {
 
         bool isAtTileCenter(sf::Vector2f tileCenter) const;
         
-        void checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections);
+        void updateMovementDirection(const std::vector<sf::Vector2i> avalibleDirections);
 
         bool changesMovementAxis() const;
 
         void alignToTileCenter(sf::Vector2f tileCenter);
+
+        bool stopped() const;
+
+        void alignToLastDirection(sf::Vector2f tileCenter);
 };

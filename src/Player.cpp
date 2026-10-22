@@ -87,16 +87,23 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 }
 
 
-void Player::checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections) {
+void Player::updateMovementDirection(const std::vector<sf::Vector2i> avalibleDirections) {
 
     if (currentDirection == requestedDirection) {
         if(!canMoveInDirection(currentDirection, avalibleDirections)) {
-            currentDirection = sf::Vector2i(0, 0);        }
+            lastDirection = currentDirection;
+            currentDirection = sf::Vector2i(0, 0);
+        }
     }
     
     else {
         if (canMoveInDirection(requestedDirection, avalibleDirections)) {
+            lastDirection = currentDirection;
             currentDirection = requestedDirection;
+        }
+        else if (!canMoveInDirection(currentDirection, avalibleDirections)) {
+            lastDirection = currentDirection;
+            currentDirection = sf::Vector2i(0, 0);
         }
     }
 
@@ -118,30 +125,41 @@ bool Player::canMoveInDirection(
 
 void Player::alignToTileCenter(sf::Vector2f tileCenter) {
 
-    if (requestedDirection.x != 0) {
-        tilePosition.x = tileCenter.x;
+    if (lastDirection.x != 0) {
+        screenPosition.x = tileCenter.x;
     }
 
-    if (requestedDirection.y != 0) {
-        tilePosition.y = tileCenter.y;
+    if (lastDirection.y != 0) {
+        screenPosition.y = tileCenter.y;
     }
+    
+    shape.setPosition(screenPosition);
 
 }
 
 
 bool Player::changesMovementAxis() const {
     
-    bool isStopped =
-    currentDirection.x == 0 && currentDirection.y == 0;
+    return
+        (lastDirection.x != 0 && currentDirection.y != 0) ||
+        (lastDirection.y != 0 && currentDirection.x != 0);
+}
 
-    bool changesAxis =
-        (currentDirection.x != 0 && requestedDirection.y != 0) ||
-        (currentDirection.y != 0 && requestedDirection.x != 0);
 
-    if (isStopped || changesAxis) {
-        return true;
+bool Player::stopped() const {
+    return currentDirection == sf::Vector2i(0, 0);
+}
+
+
+void Player::alignToLastDirection(sf::Vector2f tileCenter) {
+
+    if (lastDirection.x != 0) {
+        screenPosition.x = tileCenter.x;
     }
 
-    return false;
-
+    if (lastDirection.y != 0) {
+        screenPosition.y = tileCenter.y;
+    }
+    
+    shape.setPosition(screenPosition);
 }

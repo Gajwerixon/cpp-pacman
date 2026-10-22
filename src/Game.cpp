@@ -75,12 +75,14 @@ void Game::updatePlayer(float deltaTime) {
 
     if (player.isAtTileCenter(tileCenter)) {
 
-        player.checkAvalibleDirections(maze.getAvalibleDirections(tilePosition));
-
-        auto directions = maze.getAvalibleDirections(tilePosition);
+        player.updateMovementDirection(maze.getAvalibleDirections(tilePosition));
 
         if (player.changesMovementAxis()) {
             player.alignToTileCenter(tileCenter);
+        }
+
+        if (player.stopped()) {
+            player.alignToLastDirection(tileCenter);
         }
 
     }
