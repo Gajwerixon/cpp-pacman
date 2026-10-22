@@ -14,8 +14,8 @@ class Player {
     private:
         sf::CircleShape shape;
 
-        sf::Vector2f currentDirection;
-        sf::Vector2f requestedDirection;
+        sf::Vector2i currentDirection;
+        sf::Vector2i requestedDirection;
 
         sf::Vector2i tilePosition;
         sf::Vector2f screenPosition;
@@ -36,5 +36,7 @@ class Player {
 
         sf::Vector2i getTilePosition() const;
 
-        bool isAtTileCenter(sf::Vector2f tileCenter) const; 
+        bool isAtTileCenter(sf::Vector2f tileCenter) const;
+        
+        void checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections);
 };
