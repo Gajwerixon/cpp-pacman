@@ -1,12 +1,16 @@
 #include "pacman/Player.hpp"
 
+#include <cmath>
+#include <algorithm>
 
 Player::Player()
     : shape(12.f),
       currentDirection(1, 0),
       requestedDirection(1, 0),
+      lastDirection(0, 0),
+      tilePosition(0, 0),
+      screenPosition(0.f, 0.f),
       speed(80.f)
-
 {
     shape.setFillColor(sf::Color::Yellow);
     shape.setOrigin(12.f, 12.f);
@@ -35,9 +39,7 @@ void Player::handleEvents(const sf::Event& event) {
 
 
 void Player::render(sf::RenderWindow& window) {
-
     window.draw(shape);
-
 }
 
 
@@ -87,7 +89,7 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 }
 
 
-void Player::updateMovementDirection(const std::vector<sf::Vector2i> avalibleDirections) {
+void Player::updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDirections) {
 
     if (currentDirection == requestedDirection) {
         if(!canMoveInDirection(currentDirection, avalibleDirections)) {

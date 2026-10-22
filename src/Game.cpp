@@ -62,29 +62,25 @@ void Game::update() {
 
 
 void Game::updatePlayer(float deltaTime) {
-
     player.update(deltaTime);
 
     sf::Vector2i tilePosition = maze.getTilePosition(player.getScreenPosition());
-
-    if (tilePosition != player.getTilePosition()) {
-        player.setTilePosition(tilePosition);
-    }
+    player.setTilePosition(tilePosition);
 
     sf::Vector2f tileCenter = maze.getTileCenter(player.getTilePosition());
 
-    if (player.isAtTileCenter(tileCenter)) {
+    if (!player.isAtTileCenter(tileCenter)) {
+        return;
+    }
 
-        player.updateMovementDirection(maze.getAvailableDirections(tilePosition));
+    player.updateMovementDirection(maze.getAvailableDirections(tilePosition));
 
-        if (player.changesMovementAxis()) {
-            player.alignToTileCenter(tileCenter);
-        }
+    if (player.changesMovementAxis()) {
+        player.alignToTileCenter(tileCenter);
+    }
 
-        if (player.stopped()) {
-            player.alignToLastDirection(tileCenter);
-        }
-
+    if (player.stopped()) {
+        player.alignToLastDirection(tileCenter);
     }
 
 }

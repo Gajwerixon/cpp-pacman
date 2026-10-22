@@ -6,52 +6,49 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-
 class Player {
+public:
+    Player();
 
-    private:
-        sf::CircleShape shape;
+    // Initialization
+    void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f startScreenPosition);
 
-        sf::Vector2i currentDirection;
-        sf::Vector2i requestedDirection;
-        sf::Vector2i lastDirection;
+    // Input and update
+    void handleEvents(const sf::Event& event);
+    void updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDirections);
+    void update(float deltaTime);
 
-        sf::Vector2i tilePosition;
-        sf::Vector2f screenPosition;
+    // Rendering
+    void render(sf::RenderWindow& window);
 
-        float speed;
+    // Position
+    sf::Vector2f getScreenPosition() const;
+    sf::Vector2i getTilePosition() const;
+    void setTilePosition(sf::Vector2i newTilePosition);
 
-        bool canMoveInDirection(
-            sf::Vector2i direction,
-            const std::vector<sf::Vector2i>& availableDirections
-        );
-    
-    public:
-        Player();
+    // Movement and alignment
+    bool isAtTileCenter(sf::Vector2f tileCenter) const;
+    bool changesMovementAxis() const;
+    bool stopped() const;
 
-        void handleEvents(const sf::Event& event);
-        void render(sf::RenderWindow& window);
-        void update(float deltaTime);
+    void alignToTileCenter(sf::Vector2f tileCenter);
+    void alignToLastDirection(sf::Vector2f tileCenter);
 
-        void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f startScreenPosition);
-        
-        sf::Vector2f getScreenPosition() const;
-        void setTilePosition(sf::Vector2i newTilePosition);
+private:
+    sf::CircleShape shape;
 
-        sf::Vector2i getTilePosition() const;
+    sf::Vector2i currentDirection;
+    sf::Vector2i requestedDirection;
+    sf::Vector2i lastDirection;
 
-        bool isAtTileCenter(sf::Vector2f tileCenter) const;
-        
-        void updateMovementDirection(const std::vector<sf::Vector2i> avalibleDirections);
+    sf::Vector2i tilePosition;
+    sf::Vector2f screenPosition;
 
-        bool changesMovementAxis() const;
+    float speed;
 
-        void alignToTileCenter(sf::Vector2f tileCenter);
+    bool canMoveInDirection(
+        sf::Vector2i direction,
+        const std::vector<sf::Vector2i>& availableDirections
+    );
 
-        bool stopped() const;
-
-        void alignToLastDirection(sf::Vector2f tileCenter);
 };
