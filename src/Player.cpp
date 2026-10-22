@@ -4,6 +4,7 @@
 Player::Player()
     : shape(12.f),
       currentDirection(1, 0),
+      requestedDirection(1, 0),
       speed(20.f)
 
 {
@@ -17,15 +18,15 @@ void Player::handleEvents(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
 
         if (event.key.code == sf::Keyboard::Up) {
-            currentDirection = sf::Vector2i(0, -1);
+            requestedDirection = sf::Vector2i(0, -1);
         } else if (event.key.code == sf::Keyboard::Right) {
-            currentDirection = sf::Vector2i(1, 0);
+            requestedDirection = sf::Vector2i(1, 0);
         }
         else if (event.key.code == sf::Keyboard::Down) {
-            currentDirection = sf::Vector2i(0, 1);
+            requestedDirection = sf::Vector2i(0, 1);
         }
         else if (event.key.code == sf::Keyboard::Left) {
-            currentDirection = sf::Vector2i(-1, 0);
+            requestedDirection = sf::Vector2i(-1, 0);
         }
  
     }
@@ -88,19 +89,33 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 
 void Player::checkAvalibleDirections(const std::vector<sf::Vector2i> avalibleDirections) {
 
-    int numOfAvalibleDirections = avalibleDirections.size();
-    int counter = 0;
+    if (currentDirection == requestedDirection) {
 
-    for (const sf::Vector2i& direction : avalibleDirections) {
+        if(!canMoveInDirection(currentDirection, avalibleDirections)) {
+            currentDirection = sf::Vector2i(0, 0);
+        }
 
-        if (currentDirection != direction) {
-            counter += 1;
+    }
+    
+    else {
+
+        if (canMoveInDirection(requestedDirection, avalibleDirections)) {
+            currentDirection = requestedDirection;
         }
 
     }
 
-    if (counter == numOfAvalibleDirections) {
-        currentDirection = sf::Vector2i(0, 0);
-    }
+}
+
+
+bool Player::canMoveInDirection(
+    sf::Vector2i direction, 
+    const std::vector<sf::Vector2i>& avalibleDirections
+) {
+
+    return std::find(
+        avalibleDirections.begin(),
+        avalibleDirections.end(),
+        direction) == avalibleDirections.begin();
 
 }

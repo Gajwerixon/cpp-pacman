@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 
 class Player {
 
@@ -21,6 +22,11 @@ class Player {
         sf::Vector2f screenPosition;
 
         float speed;
+
+        bool canMoveInDirection(
+            sf::Vector2i direction,
+            const std::vector<sf::Vector2i>& availableDirections
+        );
     
     public:
         Player();
