@@ -165,3 +165,14 @@ void Player::alignToLastDirection(sf::Vector2f tileCenter) {
     
     shape.setPosition(screenPosition);
 }
+
+
+sf::Vector2i Player::getCurrentDirection(void) const {
+    return currentDirection;
+}
+
+
+void Player::setScreenPosition(sf::Vector2f position) {
+    screenPosition = position;
+    shape.setPosition(screenPosition);
+}

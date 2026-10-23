@@ -21,6 +21,9 @@ public:
     sf::Vector2i getTilePosition(sf::Vector2f screenPosition);
     sf::Vector2f getTileCenter(sf::Vector2i tilePosition);
 
+    bool isTunnel(sf::Vector2i tilePosition) const;
+    int getWidth(void) const;
+
 private:
     int tileSize = 24;
     int offsetY = 3;

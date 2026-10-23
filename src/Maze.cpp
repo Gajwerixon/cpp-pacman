@@ -16,7 +16,7 @@ Maze::Maze()
         "     #.##          ##.#     ",
         "     #.## ######## ##.#     ",
         "######.## #      # ##.######",
-        "      .   #      #   .      ",
+        "TTTTTT.   #      #   .TTTTTT",
         "######.## #      # ##.######",
         "     #.## ######## ##.#     ",
         "     #.##          ##.#     ",
@@ -195,4 +195,13 @@ std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition
 
     return avalibleDirections;
 
+}
+
+
+bool Maze::isTunnel(sf::Vector2i tilePosition) const {
+    return mazeLayout[tilePosition.y][tilePosition.x] == 'T';
+}
+
+int Maze::getWidth(void) const {
+    return mazeLayout[0].size();
 }

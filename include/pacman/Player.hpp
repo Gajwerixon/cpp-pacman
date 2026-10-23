@@ -34,6 +34,10 @@ public:
     void alignToTileCenter(sf::Vector2f tileCenter);
     void alignToLastDirection(sf::Vector2f tileCenter);
 
+    sf::Vector2i getCurrentDirection(void) const;
+
+    void setScreenPosition(sf::Vector2f position);
+
 private:
     sf::CircleShape shape;
 
