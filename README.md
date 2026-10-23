@@ -12,7 +12,7 @@ This is a learning project focused on improving C++ programming skills, practici
 ## Development Plan
 1. [X] Set up the project structure and build system.
 2. [X] Create an SFML window and the main game loop.
-3. [ ] Implement the game map and player movement.
+3. [X] Implement the game map and player movement.
 4. [ ] Add walls, collectibles, and collision detection.
 5. [ ] Implement ghosts and basic enemy behaviour.
 6. [ ] Add scoring, lives, and game states.
