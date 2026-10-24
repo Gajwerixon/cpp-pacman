@@ -12,6 +12,7 @@ add_executable(Pacman
     src/Game.cpp
     src/Player.cpp
     src/Maze.cpp
+    src/Ghost.cpp
 )
 
 target_link_libraries(Pacman PRIVATE
