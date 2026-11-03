@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -35,11 +36,13 @@ private:
     std::vector<sf::CircleShape> energizers;
 
     sf::Vector2i pacmanStart;
+    std::map<char, sf::Vector2i> ghostStart;
 
     void createMaze();
     void createWall(std::size_t row, std::size_t col);
     void createDot(std::size_t row, std::size_t col);
     void createEnergizer(std::size_t row, std::size_t col);
     void setPacmanStart(std::size_t row, std::size_t col);
+    void setGhostStart(char ghostType, std::size_t row, std::size_t col);
 
 };

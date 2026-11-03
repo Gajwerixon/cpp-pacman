@@ -13,7 +13,7 @@ Maze::Maze()
         "#......##....##....##......#",
         "######.##### ## #####.######",
         "     #.##### ## #####.#     ",
-        "     #.##    B     ##.#     ",
+        "     #.##   cbpi   ##.#     ",
         "     #.## ######## ##.#     ",
         "######.## #      # ##.######",
         "TTTTTT.   #      #   .TTTTTT",
@@ -76,7 +76,12 @@ void Maze::createMaze() {
             case 'P':
                 setPacmanStart(row, col);
                 break;
-            
+            case 'b':
+            case 'p':
+            case 'i':
+            case 'c':
+                setGhostStart(mazeLayout[col][row], row, col);
+                break;
             default:
                 break;
             }
@@ -132,6 +137,11 @@ void Maze::createEnergizer(std::size_t row, std::size_t col) {
 
 void Maze::setPacmanStart(std::size_t row, std::size_t col) {
     pacmanStart = sf::Vector2i(col, row);
+}
+
+
+void Maze::setGhostStart(char ghostType, std::size_t row, std::size_t col) {
+    ghostStart[ghostType] = sf::Vector2i(col, row);
 }
 
 
@@ -201,6 +211,7 @@ std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition
 bool Maze::isTunnel(sf::Vector2i tilePosition) const {
     return mazeLayout[tilePosition.y][tilePosition.x] == 'T';
 }
+
 
 int Maze::getWidth(void) const {
     return mazeLayout[0].size();
