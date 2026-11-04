@@ -150,6 +150,11 @@ sf::Vector2i Maze::getPacmanStart() const {
 };
 
 
+std::map<char, sf::Vector2i> Maze::getGhostStart() const {
+    return ghostStart;
+}
+
+
 sf::Vector2f Maze::getScreenPosition(sf::Vector2i tilePosition) {
     
     sf::Vector2f screenPostion;
@@ -170,7 +175,7 @@ sf::Vector2i Maze::getTilePosition(sf::Vector2f screenPosition) {
 }
 
 
-sf::Vector2f Maze::getTileCenter(sf::Vector2i tilePosition) {
+sf::Vector2f Maze::getTileCenter(sf::Vector2i tilePosition) const {
 
     sf::Vector2f tileCenter;
     tileCenter.x = (tilePosition.x * tileSize) + tileSize / 2;

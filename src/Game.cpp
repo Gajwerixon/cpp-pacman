@@ -1,6 +1,8 @@
 #include "pacman/Game.hpp"
 
-Game::Game() {
+Game::Game()
+    : ghostManager(maze)
+{
     player.setStartPosition(
         maze.getPacmanStart(), 
         maze.getScreenPosition(maze.getPacmanStart())
@@ -122,3 +124,8 @@ void Game::updatePlayer(float deltaTime) {
     }
 
 }
+
+
+void Game::updateGhosts(float deltaTime) {
+    
+} 

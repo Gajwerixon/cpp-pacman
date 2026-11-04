@@ -8,6 +8,7 @@
 
 #include "pacman/Player.hpp"
 #include "Maze.hpp"
+#include "GhostManager.hpp"
 
 class Game {
 
@@ -24,6 +25,8 @@ class Game {
         sf::Clock clock;
         Maze maze;
         Player player;
+        GhostManager ghostManager;
 
         void updatePlayer(float deltaTime);
+        void updateGhosts(float deltaTime);
 };

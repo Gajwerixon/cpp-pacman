@@ -11,9 +11,11 @@ Ghost::Ghost(sf::Color color)
     shape.setOrigin(12.f, 12.f);
 }
 
+
 void Ghost::render(sf::RenderWindow& window) {
     window.draw(shape);
 }
+
 
 void Ghost::update(float deltaTime) {
 
@@ -24,6 +26,7 @@ void Ghost::update(float deltaTime) {
 
 }
 
+
 void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPositon) {
 
     this->tilePosition = tilePosition;
@@ -33,9 +36,11 @@ void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosit
 
 }
 
+
 sf::Vector2i Ghost::getTilePosition() const {
     return tilePosition;
 }
+
 
 sf::Vector2f Ghost::getScreenPosition() const {
     return screenPosition;
