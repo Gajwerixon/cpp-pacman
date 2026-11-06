@@ -1,5 +1,8 @@
 #pragma once
 
+#include "pacman/Maze.hpp"
+#include "pacman/Player.hpp"
+
 #include <vector>
 
 #include <SFML/Graphics.hpp>
@@ -8,8 +11,8 @@ class Ghost {
 public:
     Ghost(sf::Color color);
 
-    void update(float deltaTime);
-    void render(sf::RenderWindow& window);
+    void update(float deltaTime, const Maze& maze, const Player& player);
+    void render(sf::RenderWindow& window) const;
 
     void setStartPosition(
         sf::Vector2i tilePosition,

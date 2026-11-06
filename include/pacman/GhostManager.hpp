@@ -5,10 +5,11 @@
 
 #include "pacman/Ghost.hpp"
 #include "pacman/Maze.hpp"
+#include "pacman/Player.hpp"
 
 class GhostManager {
 public:
-    GhostManager(const Maze& maze);
+    GhostManager(const Maze& maze, const Player& player);
 
     void update(float deltaTime);
     void render(sf::RenderWindow& window);
@@ -22,4 +23,7 @@ private:
     };
 
     std::vector<Ghost> ghosts;
+
+    const Player& player;
+    const Maze& maze;
 };

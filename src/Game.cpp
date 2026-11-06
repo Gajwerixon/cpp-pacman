@@ -1,7 +1,7 @@
 #include "pacman/Game.hpp"
 
 Game::Game()
-    : ghostManager(maze)
+    : ghostManager(maze, player)
 {
     player.setStartPosition(
         maze.getPacmanStart(), 

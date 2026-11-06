@@ -12,12 +12,12 @@ Ghost::Ghost(sf::Color color)
 }
 
 
-void Ghost::render(sf::RenderWindow& window) {
+void Ghost::render(sf::RenderWindow& window) const {
     window.draw(shape);
 }
 
 
-void Ghost::update(float deltaTime) {
+void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
 
     screenPosition.x += currentDirection.x * speed * deltaTime;
     screenPosition.y += currentDirection.y * speed * deltaTime;

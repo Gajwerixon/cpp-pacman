@@ -1,6 +1,8 @@
 #include "pacman/GhostManager.hpp"
 
-GhostManager::GhostManager(const Maze& maze) {
+GhostManager::GhostManager(const Maze& maze, const Player& player) 
+    : maze(maze), player(player)
+{
 
     for (const auto& [type, tilePosition] : maze.getGhostStart()) {
 
@@ -18,10 +20,10 @@ GhostManager::GhostManager(const Maze& maze) {
 }
 
 
-void GhostManager::GhostManager::update(float deltatime) {
+void GhostManager::update(float deltatime) {
 
     for (auto& ghost : ghosts) {
-        ghost.update(deltatime);
+        ghost.update(deltatime, maze, player);
     }
 
 }
@@ -29,7 +31,7 @@ void GhostManager::GhostManager::update(float deltatime) {
 
 void GhostManager::GhostManager::render(sf::RenderWindow& window) {
 
-    for (auto& ghost : ghosts) {
+    for (const auto& ghost : ghosts) {
         ghost.render(window);
     }
 
