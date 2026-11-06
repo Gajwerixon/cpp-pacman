@@ -3,8 +3,8 @@
 #include <vector>
 #include <map>
 
-#include "include/pacman/Ghost.hpp"
-#include "include/pacman/Maze.hpp"
+#include "pacman/Ghost.hpp"
+#include "pacman/Maze.hpp"
 
 class GhostManager {
 public:
@@ -15,10 +15,10 @@ public:
 
 private:
     std::map<char, sf::Color> ghostColors = {
-        {'B', sf::Color::Red},
-        {'K', sf::Color::Magenta},
-        {'I', sf::Color::Cyan},
-        {'C', sf::Color(255, 165, 0)}
+        {'b', sf::Color::Red},
+        {'p', sf::Color::Magenta},
+        {'i', sf::Color::Cyan},
+        {'c', sf::Color(255, 165, 0)}
     };
 
     std::vector<Ghost> ghosts;
