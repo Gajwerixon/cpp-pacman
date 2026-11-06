@@ -80,7 +80,7 @@ void Maze::createMaze() {
             case 'p':
             case 'i':
             case 'c':
-                setGhostStart(mazeLayout[col][row], row, col);
+                setGhostStart(mazeLayout[row][col], row, col);
                 break;
             default:
                 break;
