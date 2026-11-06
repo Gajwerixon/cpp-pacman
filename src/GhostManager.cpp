@@ -16,3 +16,21 @@ GhostManager::GhostManager(const Maze& maze) {
     }
 
 }
+
+
+void GhostManager::GhostManager::update(float deltatime) {
+
+    for (auto& ghost : ghosts) {
+        ghost.update(deltatime);
+    }
+
+}
+
+
+void GhostManager::GhostManager::render(sf::RenderWindow& window) {
+
+    for (auto& ghost : ghosts) {
+        ghost.render(window);
+    }
+
+}

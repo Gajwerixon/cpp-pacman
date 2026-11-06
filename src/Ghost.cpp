@@ -2,7 +2,7 @@
 
 Ghost::Ghost(sf::Color color)
     : shape(12.f),
-      currentDirection(1, 0),
+      currentDirection(0, 0),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
       speed(80.f)
@@ -27,7 +27,7 @@ void Ghost::update(float deltaTime) {
 }
 
 
-void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPositon) {
+void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition) {
 
     this->tilePosition = tilePosition;
     this->screenPosition = screenPosition;

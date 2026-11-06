@@ -48,6 +48,7 @@ void Game::render() {
 
     maze.render(window);
     player.render(window);
+    ghostManager.render(window);
 
     window.display();
 
@@ -59,6 +60,7 @@ void Game::update() {
     float deltaTime = clock.restart().asSeconds();
 
     updatePlayer(deltaTime);
+    updateGhosts(deltaTime);
 
 }
 
@@ -128,4 +130,6 @@ void Game::updatePlayer(float deltaTime) {
 
 void Game::updateGhosts(float deltaTime) {
     
+    ghostManager.update(deltaTime);
+
 } 
