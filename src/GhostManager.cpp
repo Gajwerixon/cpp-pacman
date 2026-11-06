@@ -1,4 +1,4 @@
-#include "GhostManager.hpp"
+#include "pacman/GhostManager.hpp"
 
 GhostManager::GhostManager(const Maze& maze) {
 
