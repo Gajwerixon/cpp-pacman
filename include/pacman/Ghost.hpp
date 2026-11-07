@@ -19,9 +19,6 @@ public:
         sf::Vector2f screenPostion
     );
 
-    sf::Vector2i getTilePosition() const;
-    sf::Vector2f getScreenPosition() const;
-
 private:
     sf::CircleShape shape;
 
@@ -29,5 +26,22 @@ private:
     sf::Vector2f screenPosition;
 
     sf::Vector2i currentDirection;
+    sf::Vector2i lastDirection;
     float speed;
+
+    sf::Vector2i getTilePosition() const;
+    sf::Vector2f getScreenPosition() const;
+
+    void setTilePosition(sf::Vector2i tilePosition);
+    void updateDirection(const std::vector<sf::Vector2i>& allowDirections);
+
+    std::vector<sf::Vector2i> directionOrder = {
+        { 0, -1 }, // UP
+        {-1,  0 }, // LEFT
+        { 0,  1 }, // DOWN
+        { 1,  0 }  // RIGHT
+    };
+
+    bool isAtTileCenter(sf::Vector2f tileCenter) const;
+
 };

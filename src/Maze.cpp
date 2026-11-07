@@ -13,7 +13,7 @@ Maze::Maze()
         "#......##....##....##......#",
         "######.##### ## #####.######",
         "     #.##### ## #####.#     ",
-        "     #.##   cbpi   ##.#     ",
+        "     #.##      i   ##.#     ",
         "     #.## ######## ##.#     ",
         "######.## #      # ##.######",
         "TTTTTT.   #      #   .TTTTTT",
@@ -155,7 +155,7 @@ std::map<char, sf::Vector2i> Maze::getGhostStart() const {
 }
 
 
-sf::Vector2f Maze::getScreenPosition(sf::Vector2i tilePosition) {
+sf::Vector2f Maze::getScreenPosition(sf::Vector2i tilePosition) const {
     
     sf::Vector2f screenPostion;
     screenPostion.x = tilePosition.x * tileSize + tileSize / 2;
@@ -165,7 +165,7 @@ sf::Vector2f Maze::getScreenPosition(sf::Vector2i tilePosition) {
 };
 
 
-sf::Vector2i Maze::getTilePosition(sf::Vector2f screenPosition) {
+sf::Vector2i Maze::getTilePosition(sf::Vector2f screenPosition) const {
 
     sf::Vector2i tilePosition;
     tilePosition.x = screenPosition.x / tileSize;
@@ -185,7 +185,7 @@ sf::Vector2f Maze::getTileCenter(sf::Vector2i tilePosition) const {
 }
 
 
-std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition) {
+std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition) const {
 
     std::vector<sf::Vector2i> directions = {
         {0, -1},

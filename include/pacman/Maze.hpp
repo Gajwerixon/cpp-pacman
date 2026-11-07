@@ -18,9 +18,9 @@ public:
     sf::Vector2i getPacmanStart() const;
     std::map<char, sf::Vector2i> getGhostStart() const;
 
-    std::vector<sf::Vector2i> getAvailableDirections(sf::Vector2i tilePosition);
-    sf::Vector2f getScreenPosition(sf::Vector2i tilePosition);
-    sf::Vector2i getTilePosition(sf::Vector2f screenPosition);
+    std::vector<sf::Vector2i> getAvailableDirections(sf::Vector2i tilePosition) const;
+    sf::Vector2f getScreenPosition(sf::Vector2i tilePosition) const;
+    sf::Vector2i getTilePosition(sf::Vector2f screenPosition) const;
     sf::Vector2f getTileCenter(sf::Vector2i tilePosition) const;
 
     bool isTunnel(sf::Vector2i tilePosition) const;
