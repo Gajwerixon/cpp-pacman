@@ -8,6 +8,7 @@ Game::Game()
 
 
 void Game::run() {
+    
     window.create(sf::VideoMode(672, 864), "Pac-Man");
 
     while (window.isOpen()) {

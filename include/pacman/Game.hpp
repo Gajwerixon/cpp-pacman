@@ -1,9 +1,6 @@
 #pragma once
 
-#include <iostream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
 #include <SFML/System/Clock.hpp>
 
 #include "pacman/Player.hpp"
@@ -27,6 +24,4 @@ class Game {
         Player player;
         GhostManager ghostManager;
 
-        void updatePlayer(float deltaTime);
-        void updateGhosts(float deltaTime);
 };
