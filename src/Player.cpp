@@ -3,17 +3,23 @@
 #include <cmath>
 #include <algorithm>
 
-Player::Player()
+Player::Player(const Maze& maze)
     : shape(12.f),
       currentDirection(1, 0),
       requestedDirection(1, 0),
       lastDirection(0, 0),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
-      speed(80.f)
+      speed(80.f),
+      maze(maze)
 {
+    tilePosition = maze.getPacmanStart();
+    screenPosition = maze.getScreenPosition(tilePosition);
+
     shape.setFillColor(sf::Color::Yellow);
     shape.setOrigin(12.f, 12.f);
+
+    shape.setPosition(screenPosition);
 }
 
 
@@ -50,30 +56,51 @@ void Player::update(float deltaTime) {
 
     shape.setPosition(screenPosition);
 
-}
+    tilePosition = maze.getTilePosition(screenPosition);
 
+    // Handle tunel
+    if (maze.isTunnel(tilePosition)) {
 
-void Player::setStartPosition(sf::Vector2i start, sf::Vector2f startScreenPosition) {
+        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0)) {
 
-    tilePosition = start;
-    screenPosition = startScreenPosition;
-    shape.setPosition(screenPosition);
+            sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
 
-}
+            tilePosition = targetTile;
+            screenPosition = maze.getTileCenter(targetTile);
 
+            return;
 
-sf::Vector2f Player::getScreenPosition() const {
-    return screenPosition;
-}
+        }
 
+        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0)) {
+            
+            sf::Vector2i targetTile(1, tilePosition.y);
 
-void Player::setTilePosition(sf::Vector2i newTilePosition) {
-    tilePosition = newTilePosition;
-}
+            tilePosition = targetTile;
+            screenPosition = maze.getTileCenter(targetTile);
 
+            return;
 
-sf::Vector2i Player::getTilePosition() const {
-    return tilePosition;
+        }
+
+    }
+    
+    sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
+
+    if (!isAtTileCenter(tileCenter)) {
+        return;
+    }
+
+    updateMovementDirection(maze.getAvailableDirections(tilePosition));
+
+    if (changesMovementAxis()) {
+        alignToTileCenter(tileCenter);
+    }
+
+    if (stopped()) {
+        alignToLastDirection(tileCenter);
+    }
+
 }
 
 
@@ -163,16 +190,5 @@ void Player::alignToLastDirection(sf::Vector2f tileCenter) {
         screenPosition.y = tileCenter.y;
     }
     
-    shape.setPosition(screenPosition);
-}
-
-
-sf::Vector2i Player::getCurrentDirection(void) const {
-    return currentDirection;
-}
-
-
-void Player::setScreenPosition(sf::Vector2f position) {
-    screenPosition = position;
     shape.setPosition(screenPosition);
 }

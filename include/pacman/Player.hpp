@@ -1,5 +1,7 @@
 #pragma once
 
+#include <pacman/Maze.hpp>
+
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -8,10 +10,7 @@
 
 class Player {
 public:
-    Player();
-
-    // Initialization
-    void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f startScreenPosition);
+    Player(const Maze& maze);
 
     // Input and update
     void handleEvents(const sf::Event& event);
@@ -21,11 +20,6 @@ public:
     // Rendering
     void render(sf::RenderWindow& window);
 
-    // Position
-    sf::Vector2f getScreenPosition() const;
-    sf::Vector2i getTilePosition() const;
-    void setTilePosition(sf::Vector2i newTilePosition);
-
     // Movement and alignment
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
     bool changesMovementAxis() const;
@@ -33,11 +27,7 @@ public:
 
     void alignToTileCenter(sf::Vector2f tileCenter);
     void alignToLastDirection(sf::Vector2f tileCenter);
-
-    sf::Vector2i getCurrentDirection(void) const;
-
-    void setScreenPosition(sf::Vector2f position);
-
+    
 private:
     sf::CircleShape shape;
 
@@ -54,5 +44,7 @@ private:
         sf::Vector2i direction,
         const std::vector<sf::Vector2i>& availableDirections
     );
+
+    const Maze& maze;
 
 };

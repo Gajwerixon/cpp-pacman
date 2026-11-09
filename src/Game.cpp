@@ -1,12 +1,9 @@
 #include "pacman/Game.hpp"
 
 Game::Game()
-    : ghostManager(maze, player)
+    : ghostManager(maze, player),
+      player(maze)
 {
-    player.setStartPosition(
-        maze.getPacmanStart(), 
-        maze.getScreenPosition(maze.getPacmanStart())
-    );
 };
 
 
@@ -59,77 +56,7 @@ void Game::update() {
 
     float deltaTime = clock.restart().asSeconds();
 
-    updatePlayer(deltaTime);
-    updateGhosts(deltaTime);
-
-}
-
-
-void Game::updatePlayer(float deltaTime) {
-
     player.update(deltaTime);
-
-    sf::Vector2i tilePosition = maze.getTilePosition(player.getScreenPosition());
-
-    // Handle tunel
-    if (maze.isTunnel(tilePosition)) {
-
-        if (
-            tilePosition.x == 0 && 
-            player.getCurrentDirection() != sf::Vector2i(1, 0)
-        ) {
-
-            sf::Vector2i targetTile(
-                maze.getWidth() - 1,
-                tilePosition.y
-            );
-
-            player.setTilePosition(targetTile);
-            player.setScreenPosition(maze.getTileCenter(targetTile));
-
-            return;
-
-        }
-
-        if (
-            tilePosition.x == maze.getWidth() - 1 && 
-            player.getCurrentDirection() != sf::Vector2i(-1, 0)
-        ) {
-            
-            sf::Vector2i targetTile(1, tilePosition.y);
-
-            player.setTilePosition(targetTile);
-            player.setScreenPosition(maze.getTileCenter(targetTile));
-
-            return;
-
-        }
-
-    }
-    
-    player.setTilePosition(tilePosition);
-
-    sf::Vector2f tileCenter = maze.getTileCenter(player.getTilePosition());
-
-    if (!player.isAtTileCenter(tileCenter)) {
-        return;
-    }
-
-    player.updateMovementDirection(maze.getAvailableDirections(tilePosition));
-
-    if (player.changesMovementAxis()) {
-        player.alignToTileCenter(tileCenter);
-    }
-
-    if (player.stopped()) {
-        player.alignToLastDirection(tileCenter);
-    }
-
-}
-
-
-void Game::updateGhosts(float deltaTime) {
-    
     ghostManager.update(deltaTime);
 
-} 
+}
