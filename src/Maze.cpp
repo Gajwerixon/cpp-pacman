@@ -16,7 +16,7 @@ Maze::Maze()
         "     #.##      i   ##.#     ",
         "     #.## ######## ##.#     ",
         "######.## #      # ##.######",
-        "TTTTTT.   #      #   .TTTTTT",
+        "      .   #      #   .      ",
         "######.## #      # ##.######",
         "     #.## ######## ##.#     ",
         "     #.##          ##.#     ",
@@ -37,6 +37,7 @@ Maze::Maze()
 
     {
         createMaze();
+        initializeTunnelTiles();
     };
 
 
@@ -213,8 +214,22 @@ std::vector<sf::Vector2i> Maze::getAvailableDirections(sf::Vector2i tilePosition
 }
 
 
+void Maze::initializeTunnelTiles() {
+
+    for (int x = 0; x < tunnelWidth; x++) {
+        tunnelTiles.emplace_back(x, tunnelRow);
+        tunnelTiles.emplace_back(getWidth() - tunnelWidth + x, tunnelRow);
+    }
+
+}
+
+
 bool Maze::isTunnel(sf::Vector2i tilePosition) const {
-    return mazeLayout[tilePosition.y][tilePosition.x] == 'T';
+    return std::find(
+        tunnelTiles.begin(),
+        tunnelTiles.end(),
+        tilePosition
+    ) != tunnelTiles.end();
 }
 
 

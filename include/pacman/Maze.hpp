@@ -46,4 +46,9 @@ private:
     void setPacmanStart(std::size_t row, std::size_t col);
     void setGhostStart(char ghostType, std::size_t row, std::size_t col);
 
+    int tunnelWidth = 6;
+    int tunnelRow = 14;
+    std::vector<sf::Vector2i> tunnelTiles;
+    void initializeTunnelTiles();
+
 };
