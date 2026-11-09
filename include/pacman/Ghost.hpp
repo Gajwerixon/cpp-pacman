@@ -23,6 +23,7 @@ private:
     sf::CircleShape shape;
 
     sf::Vector2i tilePosition;
+    sf::Vector2i lastDecisionTile;
     sf::Vector2f screenPosition;
 
     sf::Vector2i currentDirection;

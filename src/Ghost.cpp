@@ -4,10 +4,11 @@
 Ghost::Ghost(sf::Color color)
     : shape(12.f),
       currentDirection(0, -1),
-      lastDirection(0, 0),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
-      speed(10.f)
+      speed(10.f),
+      lastDecisionTile(0, 0),
+      lastDirection(0,0)
 {
     shape.setFillColor(color);
     shape.setOrigin(12.f, 12.f);
@@ -33,9 +34,11 @@ void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
     if (!isAtTileCenter(tileCenter)) {
         return;
     }
-
-    updateDirection(maze.getAvailableDirections(tilePosition));
-
+    
+    if (tilePosition != lastDecisionTile) {
+        updateDirection(maze.getAvailableDirections(tilePosition));
+        lastDecisionTile = tilePosition;
+    }
 }
 
 
@@ -83,7 +86,6 @@ void Ghost::updateDirection(const std::vector<sf::Vector2i>& allowDirections) {
 
             if (direction == validDirection) {
 
-                lastDirection = currentDirection;
                 currentDirection = direction;
                 return;
 
