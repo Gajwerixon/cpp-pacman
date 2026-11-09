@@ -29,12 +29,16 @@ void Player::handleEvents(const sf::Event& event) {
 
         if (event.key.code == sf::Keyboard::Up) {
             requestedDirection = sf::Vector2i(0, -1);
-        } else if (event.key.code == sf::Keyboard::Right) {
+        }
+         
+        else if (event.key.code == sf::Keyboard::Right) {
             requestedDirection = sf::Vector2i(1, 0);
         }
+
         else if (event.key.code == sf::Keyboard::Down) {
             requestedDirection = sf::Vector2i(0, 1);
         }
+        
         else if (event.key.code == sf::Keyboard::Left) {
             requestedDirection = sf::Vector2i(-1, 0);
         }
@@ -106,7 +110,7 @@ void Player::update(float deltaTime) {
 
 bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 
-    float tolerance = 2.f;
+    float tolerance = 1.f;
 
     float positionX = std::abs(screenPosition.x - tileCenter.x);
     float positionY = std::abs(screenPosition.y - tileCenter.y);
@@ -119,21 +123,32 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
 void Player::updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDirections) {
 
     if (currentDirection == requestedDirection) {
+
         if(!canMoveInDirection(currentDirection, avalibleDirections)) {
+
             lastDirection = currentDirection;
             currentDirection = sf::Vector2i(0, 0);
+
         }
+
     }
     
     else {
+
         if (canMoveInDirection(requestedDirection, avalibleDirections)) {
+
             lastDirection = currentDirection;
             currentDirection = requestedDirection;
+
         }
+
         else if (!canMoveInDirection(currentDirection, avalibleDirections)) {
+
             lastDirection = currentDirection;
             currentDirection = sf::Vector2i(0, 0);
+
         }
+
     }
 
 }
@@ -191,4 +206,5 @@ void Player::alignToLastDirection(sf::Vector2f tileCenter) {
     }
     
     shape.setPosition(screenPosition);
+
 }

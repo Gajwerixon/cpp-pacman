@@ -41,4 +41,6 @@ private:
 
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
 
+    void alignToTileCenter(sf::Vector2f tileCenter);
+
 };

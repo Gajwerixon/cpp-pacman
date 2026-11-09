@@ -6,7 +6,7 @@ Ghost::Ghost(sf::Color color)
       currentDirection(0, -1),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
-      speed(10.f),
+      speed(80.f),
       lastDecisionTile(0, 0),
       lastDirection(0,0)
 {
@@ -35,10 +35,18 @@ void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
         return;
     }
     
+    // Choose a new direction only when entering a different tile
     if (tilePosition != lastDecisionTile) {
+
         updateDirection(maze.getAvailableDirections(tilePosition));
         lastDecisionTile = tilePosition;
+
+        if (lastDirection != currentDirection) {
+            alignToTileCenter(tileCenter);
+        }
+
     }
+
 }
 
 
@@ -71,7 +79,9 @@ void Ghost::updateDirection(const std::vector<sf::Vector2i>& allowDirections) {
 
             if (direction == validDirection) {
 
+                lastDirection = currentDirection;
                 currentDirection = direction;
+
                 return;
 
             }
@@ -85,11 +95,26 @@ void Ghost::updateDirection(const std::vector<sf::Vector2i>& allowDirections) {
 
 bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const {
 
-    float tolerance = 2.f;
+    float tolerance = 1.f;
 
     float positionX = std::abs(screenPosition.x - tileCenter.x);
     float positionY = std::abs(screenPosition.y - tileCenter.y);
 
     return positionX < tolerance && positionY < tolerance;
+
+}
+
+
+void Ghost::alignToTileCenter(sf::Vector2f tileCenter) {
+
+    if (lastDirection.x != 0) {
+        screenPosition.x = tileCenter.x;
+    }
+
+    if (lastDirection.y != 0) {
+        screenPosition.y = tileCenter.y;
+    }
+    
+    shape.setPosition(screenPosition);
 
 }
