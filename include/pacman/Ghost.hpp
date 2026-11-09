@@ -30,10 +30,6 @@ private:
     sf::Vector2i lastDirection;
     float speed;
 
-    sf::Vector2i getTilePosition() const;
-    sf::Vector2f getScreenPosition() const;
-
-    void setTilePosition(sf::Vector2i tilePosition);
     void updateDirection(const std::vector<sf::Vector2i>& allowDirections);
 
     std::vector<sf::Vector2i> directionOrder = {

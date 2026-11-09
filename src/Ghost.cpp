@@ -52,21 +52,6 @@ void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosit
 }
 
 
-sf::Vector2i Ghost::getTilePosition() const {
-    return tilePosition;
-}
-
-
-sf::Vector2f Ghost::getScreenPosition() const {
-    return screenPosition;
-}
-
-
-void Ghost::setTilePosition(sf::Vector2i tilePosition) {
-    this->tilePosition = tilePosition;
-}
-
-
 void Ghost::updateDirection(const std::vector<sf::Vector2i>& allowDirections) {
 
     // The Ghost cannot turn back => removing backward direction
