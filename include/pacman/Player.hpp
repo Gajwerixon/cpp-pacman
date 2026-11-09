@@ -5,7 +5,6 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include <SFML/System/Vector2.hpp>
 
 class Player {
@@ -27,7 +26,7 @@ public:
 
     void alignToTileCenter(sf::Vector2f tileCenter);
     void alignToLastDirection(sf::Vector2f tileCenter);
-    
+
 private:
     sf::CircleShape shape;
 
