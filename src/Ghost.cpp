@@ -3,7 +3,7 @@
 
 Ghost::Ghost(sf::Color color)
     : shape(12.f),
-      currentDirection(0, -1),
+      currentDirection(1, 0),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
       speed(80.f),
@@ -28,6 +28,33 @@ void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
     shape.setPosition(screenPosition);
 
     tilePosition = maze.getTilePosition(screenPosition);
+
+    // Handle tunel
+    if (maze.isTunnel(tilePosition)) {
+
+        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0)) {
+
+            sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
+
+            tilePosition = targetTile;
+            screenPosition = maze.getTileCenter(targetTile);
+
+            return;
+
+        }
+
+        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0)) {
+            
+            sf::Vector2i targetTile(1, tilePosition.y);
+
+            tilePosition = targetTile;
+            screenPosition = maze.getTileCenter(targetTile);
+
+            return;
+
+        }
+
+    }
 
     sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
 
