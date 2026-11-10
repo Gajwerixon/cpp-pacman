@@ -23,8 +23,9 @@ public:
     sf::Vector2i getTilePosition(sf::Vector2f screenPosition) const;
     sf::Vector2f getTileCenter(sf::Vector2i tilePosition) const;
 
-    bool isTunnel(sf::Vector2i tilePosition) const;
     int getWidth(void) const;
+    bool isTunnel(sf::Vector2i tilePosition) const;
+    bool isSpecialZone(sf::Vector2i tilePosition) const;
 
 private:
     int tileSize = 24;
@@ -50,5 +51,12 @@ private:
     int tunnelRow = 14;
     std::vector<sf::Vector2i> tunnelTiles;
     void initializeTunnelTiles();
+
+    int specialZoneStartX = 11;
+    int specialZoneWidth = 6;
+    int specialZone1Y = 11;
+    int specialZone2Y = 23;
+    std::vector<sf::Vector2i> specialZoneTiles;
+    void initializeSpecialZones();
 
 };

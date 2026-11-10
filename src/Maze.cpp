@@ -38,6 +38,7 @@ Maze::Maze()
     {
         createMaze();
         initializeTunnelTiles();
+        initializeSpecialZones();
     };
 
 
@@ -224,12 +225,33 @@ void Maze::initializeTunnelTiles() {
 }
 
 
+void Maze::initializeSpecialZones() {
+
+    for (int x = specialZoneStartX; x < specialZoneStartX + specialZoneWidth; x++) {
+        specialZoneTiles.emplace_back(x, specialZone1Y);
+        specialZoneTiles.emplace_back(x, specialZone2Y);
+    }
+
+}
+
+
 bool Maze::isTunnel(sf::Vector2i tilePosition) const {
     return std::find(
         tunnelTiles.begin(),
         tunnelTiles.end(),
         tilePosition
     ) != tunnelTiles.end();
+}
+
+
+bool Maze::isSpecialZone(sf::Vector2i tilePosition) const {
+
+    return std::find(
+        specialZoneTiles.begin(),
+        specialZoneTiles.end(),
+        tilePosition
+    ) != specialZoneTiles.end();
+
 }
 
 
