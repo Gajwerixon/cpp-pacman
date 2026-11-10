@@ -2,6 +2,8 @@
 
 #include "pacman/Maze.hpp"
 #include "pacman/Player.hpp"
+#include "pacman/GhostMode.hpp"
+#include <string>
 
 #include <vector>
 
@@ -9,17 +11,22 @@
 
 class Ghost {
 public:
-    Ghost(sf::Color color);
+    Ghost(char type, sf::Color color);
 
-    void update(float deltaTime, const Maze& maze, const Player& player);
     void render(sf::RenderWindow& window) const;
+
+    void update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile);
+    void updateScatterDirection(const Maze& maze, sf::Vector2i targetTile);
 
     void setStartPosition(
         sf::Vector2i tilePosition,
         sf::Vector2f screenPostion
     );
 
+    char getType() const;
+
 private:
+    char type;
     sf::CircleShape shape;
 
     sf::Vector2i tilePosition;

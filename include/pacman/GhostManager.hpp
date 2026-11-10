@@ -6,6 +6,14 @@
 #include "pacman/Ghost.hpp"
 #include "pacman/Maze.hpp"
 #include "pacman/Player.hpp"
+#include "pacman/GhostMode.hpp"
+
+
+struct GhostData {
+    sf::Color color;
+    sf::Vector2i scatterTarget;
+};
+
 
 class GhostManager {
 public:
@@ -15,11 +23,13 @@ public:
     void render(sf::RenderWindow& window);
 
 private:
-    std::map<char, sf::Color> ghostColors = {
-        {'b', sf::Color::Red},
-        {'p', sf::Color::Magenta},
-        {'i', sf::Color::Cyan},
-        {'c', sf::Color(255, 165, 0)}
+    GhostMode currentMode = GhostMode::Scatter;
+
+    std::map<char, GhostData> ghostConfig = {
+        {'b', {sf::Color(255, 0, 0),   {26, 0}}},
+        {'p', {sf::Color(255, 0, 255), {1, 0}}},
+        {'i', {sf::Color(0, 255, 255), {26, 30}}},
+        {'c', {sf::Color(255, 165, 0), {1, 30}}}
     };
 
     std::vector<Ghost> ghosts;

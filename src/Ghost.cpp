@@ -1,8 +1,10 @@
 #include "pacman/Ghost.hpp"
+
 #include <iostream>
 
-Ghost::Ghost(sf::Color color)
-    : shape(12.f),
+Ghost::Ghost(char type, sf::Color color)
+    : type(type),
+      shape(12.f),
       currentDirection(1, 0),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
@@ -20,7 +22,7 @@ void Ghost::render(sf::RenderWindow& window) const {
 }
 
 
-void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
+void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile) {
 
     screenPosition.x += currentDirection.x * speed * deltaTime;
     screenPosition.y += currentDirection.y * speed * deltaTime;
@@ -70,14 +72,30 @@ void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
     // Choose a new direction only when entering a different tile
     if (tilePosition != lastDecisionTile) {
 
-        updateDirection(maze.getAvailableDirections(tilePosition));
         lastDecisionTile = tilePosition;
 
-        if (lastDirection != currentDirection) {
-            alignToTileCenter(tileCenter);
+        switch (mode) {
+            case GhostMode::Scatter:
+                updateDirection(maze.getAvailableDirections(tilePosition));
+                break;
+
+            case GhostMode::Chase:
+                // Chase logic
+                break;
+
+            case GhostMode::Frightened:
+                // Frightened logic
+                break;
         }
 
     }
+
+}
+
+
+void Ghost::updateScatterDirection(const Maze& maze, sf::Vector2i targetTile) {
+
+    
 
 }
 
@@ -149,4 +167,9 @@ void Ghost::alignToTileCenter(sf::Vector2f tileCenter) {
     
     shape.setPosition(screenPosition);
 
+}
+
+
+char Ghost::getType() const {
+    return type;
 }

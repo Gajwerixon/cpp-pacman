@@ -6,7 +6,9 @@ GhostManager::GhostManager(const Maze& maze, const Player& player)
 
     for (const auto& [type, tilePosition] : maze.getGhostStart()) {
 
-        Ghost ghost(ghostColors.at(type));
+        const GhostData& data = ghostConfig.at(type);
+
+        Ghost ghost(type, data.color);
 
         ghost.setStartPosition(
             tilePosition,
@@ -20,12 +22,15 @@ GhostManager::GhostManager(const Maze& maze, const Player& player)
 }
 
 
-void GhostManager::update(float deltatime) {
+void GhostManager::update(float deltaTime) {
 
     for (auto& ghost : ghosts) {
-        ghost.update(deltatime, maze, player);
-    }
+        sf::Vector2i targetTile =
+            ghostConfig.at(ghost.getType()).scatterTarget;
 
+        ghost.update(deltaTime, maze, currentMode, targetTile);
+    }
+    
 }
 
 
