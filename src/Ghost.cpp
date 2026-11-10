@@ -56,6 +56,11 @@ void Ghost::update(float deltaTime, const Maze& maze, const Player& player) {
 
     }
 
+    // Prevent ghosts from changing direction inside special zones
+    if (maze.isSpecialZone(tilePosition)) {
+        return;
+    }
+
     sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
 
     if (!isAtTileCenter(tileCenter)) {
