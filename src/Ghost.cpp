@@ -1,6 +1,7 @@
 #include "pacman/Ghost.hpp"
 
 #include <iostream>
+#include <cmath>
 
 Ghost::Ghost(char type, sf::Color color)
     : type(type),
@@ -76,7 +77,7 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
 
         switch (mode) {
             case GhostMode::Scatter:
-                updateDirection(maze.getAvailableDirections(tilePosition));
+                updateScatterDirection(maze.getAvailableDirections(tilePosition), targetTile);
                 break;
 
             case GhostMode::Chase:
@@ -93,9 +94,51 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
 }
 
 
-void Ghost::updateScatterDirection(const Maze& maze, sf::Vector2i targetTile) {
+void Ghost::updateScatterDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile) {
 
-    
+    std::vector<int> distances;    
+
+    // Calculate distance from new potential tile to targetTile
+    for (auto direction : allowDirections) {
+
+        sf::Vector2i distance;
+
+        distance.x = tilePosition.x + direction.x;
+        distance.y = tilePosition.y + direction.y;
+
+        int dx = distance.x - targetTile.x;
+        int dy = distance.y - targetTile.y;
+
+        // Calcualte euclidean distance and add it into vector
+        distances.push_back(dx * dx + dy * dy);
+    }
+
+    // Find minimal distance
+    int minDistance = distances[0];
+
+    for (int distance : distances) {
+        if (distance < minDistance) {
+            minDistance = distance;
+        }
+    }
+
+    // Find add minimal values (there could be 1 or two minimal values to target tile)
+    std::vector<sf::Vector2i> bestDirections;
+
+    for (std::size_t i = 0; i < distances.size(); i++) {
+        if (distances[i] == minDistance) {
+            bestDirections.push_back(allowDirections[i]);
+        }
+    }
+
+    for (auto priorityDirection : directionOrder) {
+        for (auto bestDirection : bestDirections) {
+            if (priorityDirection == bestDirection) {
+                currentDirection = priorityDirection;
+                return;
+            }
+        }
+    }
 
 }
 
