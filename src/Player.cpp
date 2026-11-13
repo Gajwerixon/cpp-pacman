@@ -208,3 +208,8 @@ void Player::alignToLastDirection(sf::Vector2f tileCenter) {
     shape.setPosition(screenPosition);
 
 }
+
+
+sf::Vector2i Player::getTilePosition() const {
+    return tilePosition;
+}

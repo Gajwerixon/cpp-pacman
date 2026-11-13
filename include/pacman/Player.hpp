@@ -27,6 +27,8 @@ public:
     void alignToTileCenter(sf::Vector2f tileCenter);
     void alignToLastDirection(sf::Vector2f tileCenter);
 
+    sf::Vector2i getTilePosition() const;
+
 private:
     sf::CircleShape shape;
 
