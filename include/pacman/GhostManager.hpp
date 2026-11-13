@@ -23,13 +23,13 @@ public:
     void render(sf::RenderWindow& window);
 
 private:
-    GhostMode currentMode = GhostMode::Chase;
+    GhostMode currentMode = GhostMode::Scatter;
 
     std::map<char, GhostData> ghostConfig = {
-        {'b', {sf::Color(255, 0, 0),   {26, 0}}},
-        {'p', {sf::Color(255, 0, 255), {1, 0}}},
-        {'i', {sf::Color(0, 255, 255), {26, 30}}},
-        {'c', {sf::Color(255, 165, 0), {1, 30}}}
+        {'b', {sf::Color(255, 0, 0),   {25, -4}}},
+        {'p', {sf::Color(255, 0, 255), {2, -4}}},
+        {'i', {sf::Color(0, 255, 255), {27, 31}}},
+        {'c', {sf::Color(255, 165, 0), {0, 31}}}
     };
 
     std::vector<Ghost> ghosts;
