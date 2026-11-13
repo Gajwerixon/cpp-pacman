@@ -23,7 +23,7 @@ public:
     void render(sf::RenderWindow& window);
 
 private:
-    GhostMode currentMode = GhostMode::Scatter;
+    GhostMode currentMode = GhostMode::Chase;
 
     std::map<char, GhostData> ghostConfig = {
         {'b', {sf::Color(255, 0, 0),   {26, 0}}},

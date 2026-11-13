@@ -25,8 +25,15 @@ GhostManager::GhostManager(const Maze& maze, const Player& player)
 void GhostManager::update(float deltaTime) {
 
     for (auto& ghost : ghosts) {
-        sf::Vector2i targetTile =
-            ghostConfig.at(ghost.getType()).scatterTarget;
+
+        sf::Vector2i targetTile;
+
+        if (currentMode == GhostMode::Scatter) {
+            targetTile = ghostConfig.at(ghost.getType()).scatterTarget;
+        }
+        else if (currentMode == GhostMode::Chase) {
+            targetTile = player.getTilePosition();
+        }
 
         ghost.update(deltaTime, maze, currentMode, targetTile);
     }
