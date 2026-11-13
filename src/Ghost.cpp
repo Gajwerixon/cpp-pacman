@@ -96,10 +96,21 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
 
 void Ghost::updateScatterDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile) {
 
+    // The Ghost cannot turn back => removing backward direction
+    std::vector<sf::Vector2i> validDirections;
+
+    for (auto direction : allowDirections) {
+
+        if (direction != -currentDirection) {
+            validDirections.push_back(direction);
+        }
+
+    }
+
     std::vector<int> distances;    
 
     // Calculate distance from new potential tile to targetTile
-    for (auto direction : allowDirections) {
+    for (auto direction : validDirections) {
 
         sf::Vector2i distance;
 
@@ -127,7 +138,7 @@ void Ghost::updateScatterDirection(const std::vector<sf::Vector2i>& allowDirecti
 
     for (std::size_t i = 0; i < distances.size(); i++) {
         if (distances[i] == minDistance) {
-            bestDirections.push_back(allowDirections[i]);
+            bestDirections.push_back(validDirections[i]);
         }
     }
 
