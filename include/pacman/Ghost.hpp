@@ -13,15 +13,9 @@ public:
     Ghost(char type, sf::Color color);
 
     void render(sf::RenderWindow& window) const;
-
     void update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile);
-    void updateScatterDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile);
 
-    void setStartPosition(
-        sf::Vector2i tilePosition,
-        sf::Vector2f screenPostion
-    );
-
+    void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPostion);
     char getType() const;
 
 private:
@@ -36,7 +30,7 @@ private:
     sf::Vector2i lastDirection;
     float speed;
 
-    void updateDirection(const std::vector<sf::Vector2i>& allowDirections);
+    void updateTargetDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile);
 
     std::vector<sf::Vector2i> directionOrder = {
         { 0, -1 }, // UP
@@ -46,7 +40,6 @@ private:
     };
 
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
-
     void alignToTileCenter(sf::Vector2f tileCenter);
 
 };

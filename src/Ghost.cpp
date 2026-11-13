@@ -18,6 +18,16 @@ Ghost::Ghost(char type, sf::Color color)
 }
 
 
+void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition) {
+
+    this->tilePosition = tilePosition;
+    this->screenPosition = screenPosition;
+
+    shape.setPosition(screenPosition);
+
+}
+
+
 void Ghost::render(sf::RenderWindow& window) const {
     window.draw(shape);
 }
@@ -60,7 +70,7 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
     }
 
     // Prevent ghosts from changing direction inside special zones
-    if (maze.isSpecialZone(tilePosition)) {
+    if (maze.isSpecialZone(tilePosition) && currentDirection.x != 0) {
         return;
     }
 
@@ -77,11 +87,8 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
 
         switch (mode) {
             case GhostMode::Scatter:
-                updateScatterDirection(maze.getAvailableDirections(tilePosition), targetTile);
-                break;
-
             case GhostMode::Chase:
-                // Chase logic
+                updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
                 break;
 
             case GhostMode::Frightened:
@@ -94,7 +101,7 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
 }
 
 
-void Ghost::updateScatterDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile) {
+void Ghost::updateTargetDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile) {
 
     // The Ghost cannot turn back => removing backward direction
     std::vector<sf::Vector2i> validDirections;
@@ -149,49 +156,6 @@ void Ghost::updateScatterDirection(const std::vector<sf::Vector2i>& allowDirecti
                 return;
             }
         }
-    }
-
-}
-
-
-void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition) {
-
-    this->tilePosition = tilePosition;
-    this->screenPosition = screenPosition;
-
-    shape.setPosition(screenPosition);
-
-}
-
-
-void Ghost::updateDirection(const std::vector<sf::Vector2i>& allowDirections) {
-
-    // The Ghost cannot turn back => removing backward direction
-    std::vector<sf::Vector2i> validDirections;
-
-    for (auto direction : allowDirections) {
-
-        if (direction != -currentDirection) {
-            validDirections.push_back(direction);
-        }
-
-    }
-
-    for (auto direction : directionOrder) {
-
-        for (auto validDirection : validDirections) {
-
-            if (direction == validDirection) {
-
-                lastDirection = currentDirection;
-                currentDirection = direction;
-
-                return;
-
-            }
-
-        }
-
     }
 
 }
