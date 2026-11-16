@@ -23,7 +23,7 @@ public:
     void render(sf::RenderWindow& window);
 
 private:
-    GhostMode currentMode = GhostMode::Scatter;
+    GhostMode currentMode = GhostMode::Chase;
 
     std::map<char, GhostData> ghostConfig = {
         {'b', {sf::Color(255, 0, 0),   {25, -4}}},
@@ -36,4 +36,10 @@ private:
 
     const Player& player;
     const Maze& maze;
+
+    sf::Vector2i getChaseTarget(const Ghost& ghost) const;
+
+    sf::Vector2i getPinkyTarget() const;
+    sf::Vector2i getInkyTarget() const;
+    sf::Vector2i getClaudeTarget() const;
 };
