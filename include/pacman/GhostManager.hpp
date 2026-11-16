@@ -42,4 +42,6 @@ private:
     sf::Vector2i getPinkyTarget() const;
     sf::Vector2i getInkyTarget() const;
     sf::Vector2i getClaudeTarget() const;
+
+    const Ghost& getGhost(char type) const;
 };

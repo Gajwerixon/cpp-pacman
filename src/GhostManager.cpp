@@ -1,5 +1,5 @@
 #include "pacman/GhostManager.hpp"
-#include <iostream>
+#include <stdexcept>
 
 GhostManager::GhostManager(const Maze& maze, const Player& player) 
     : maze(maze), player(player)
@@ -119,19 +119,79 @@ sf::Vector2i GhostManager::getPinkyTarget() const {
 
     }
 
-    std::cout << "Player: (" << playerTilePosition.x << ", " << playerTilePosition.y << "\n";
-    std::cout << "Target: (" << targetTile.x << ", " << targetTile.y << "\n";
-
     return targetTile;
 
 }
 
 
 sf::Vector2i GhostManager::getInkyTarget() const {
-    return player.getTilePosition();
+
+    sf::Vector2i targetTile;
+
+    int normalOffset = 2;
+    sf::Vector2i upDirectionOffset(-2, -2);
+
+    sf::Vector2i playerTilePosition = player.getTilePosition();
+    sf::Vector2i playerCurrentDirection = player.getCurrentDirection();
+    sf::Vector2i playerLastDirection = player.getLastDirection();
+
+    sf::Vector2i blinkyTilePosition = getGhost('b').getTilePosition();
+
+    if (playerCurrentDirection != sf::Vector2i(0, 0)) {
+
+        if (playerCurrentDirection != sf::Vector2i(0, -1)) {
+
+            targetTile.x = playerTilePosition.x + (playerCurrentDirection.x * normalOffset);
+            targetTile.y = playerTilePosition.y + (playerCurrentDirection.y * normalOffset);
+
+        }
+
+        else {
+
+            targetTile.x = playerTilePosition.x + upDirectionOffset.x;
+            targetTile.y = playerTilePosition.y + upDirectionOffset.y;
+
+        }
+
+    }
+
+    else {
+
+        if (playerLastDirection != sf::Vector2i(0, -1)) {
+
+            targetTile.x = playerTilePosition.x + (playerLastDirection.x * normalOffset);
+            targetTile.y = playerTilePosition.y + (playerLastDirection.y * normalOffset);
+
+        }
+
+        else {
+
+            targetTile.x = playerTilePosition.x + upDirectionOffset.x;
+            targetTile.y = playerTilePosition.y + upDirectionOffset.y;
+
+        }
+
+    }
+
+    // Calculate Inky's target by reflecting the pivot across Blinky's position.    targetTile.x = targetTile.x + (targetTile.x - blinkyTilePosition.x);
+    targetTile.y = targetTile.y + (targetTile.y - blinkyTilePosition.y);
+
+    return targetTile;
+
 }
 
 
 sf::Vector2i GhostManager::getClaudeTarget() const {
     return player.getTilePosition();
+}
+
+
+const Ghost& GhostManager::getGhost(char type) const {
+    for (const auto& ghost : ghosts) {
+        if (ghost.getType() == type) {
+            return ghost;
+        }
+    }
+
+    throw std::runtime_error("Ghost not found");
 }
