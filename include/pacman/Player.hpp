@@ -28,6 +28,8 @@ public:
     void alignToLastDirection(sf::Vector2f tileCenter);
 
     sf::Vector2i getTilePosition() const;
+    sf::Vector2i getCurrentDirection() const;
+    sf::Vector2i getLastDirection() const;
 
 private:
     sf::CircleShape shape;

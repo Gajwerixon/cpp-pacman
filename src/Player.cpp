@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 Player::Player(const Maze& maze)
     : shape(12.f),
@@ -126,7 +127,7 @@ void Player::updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDi
 
         if(!canMoveInDirection(currentDirection, avalibleDirections)) {
 
-            lastDirection = currentDirection;
+            lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = sf::Vector2i(0, 0);
 
         }
@@ -136,15 +137,15 @@ void Player::updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDi
     else {
 
         if (canMoveInDirection(requestedDirection, avalibleDirections)) {
-
-            lastDirection = currentDirection;
+            
+            lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = requestedDirection;
 
         }
 
         else if (!canMoveInDirection(currentDirection, avalibleDirections)) {
 
-            lastDirection = currentDirection;
+            lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = sf::Vector2i(0, 0);
 
         }
@@ -212,4 +213,14 @@ void Player::alignToLastDirection(sf::Vector2f tileCenter) {
 
 sf::Vector2i Player::getTilePosition() const {
     return tilePosition;
+}
+
+
+sf::Vector2i Player::getCurrentDirection() const {
+    return currentDirection;
+}
+
+
+sf::Vector2i Player::getLastDirection() const {
+    return lastDirection;
 }
