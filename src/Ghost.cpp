@@ -191,3 +191,8 @@ void Ghost::alignToTileCenter(sf::Vector2f tileCenter) {
 char Ghost::getType() const {
     return type;
 }
+
+
+sf::Vector2i Ghost::getTilePosition() const {
+    return tilePosition;
+}

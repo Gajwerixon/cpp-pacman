@@ -16,7 +16,9 @@ public:
     void update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile);
 
     void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPostion);
+
     char getType() const;
+    sf::Vector2i getTilePosition() const;
 
 private:
     char type;
