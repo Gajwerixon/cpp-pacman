@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 
-Player::Player(const Maze& maze)
+Player::Player(const Maze &maze)
     : shape(12.f),
       currentDirection(1, 0),
       requestedDirection(1, 0),
@@ -23,38 +23,41 @@ Player::Player(const Maze& maze)
     shape.setPosition(screenPosition);
 }
 
+void Player::handleEvents(const sf::Event &event)
+{
 
-void Player::handleEvents(const sf::Event& event) {
+    if (event.type == sf::Event::KeyPressed)
+    {
 
-    if (event.type == sf::Event::KeyPressed) {
-
-        if (event.key.code == sf::Keyboard::Up) {
+        if (event.key.code == sf::Keyboard::Up)
+        {
             requestedDirection = sf::Vector2i(0, -1);
         }
-         
-        else if (event.key.code == sf::Keyboard::Right) {
+
+        else if (event.key.code == sf::Keyboard::Right)
+        {
             requestedDirection = sf::Vector2i(1, 0);
         }
 
-        else if (event.key.code == sf::Keyboard::Down) {
+        else if (event.key.code == sf::Keyboard::Down)
+        {
             requestedDirection = sf::Vector2i(0, 1);
         }
-        
-        else if (event.key.code == sf::Keyboard::Left) {
+
+        else if (event.key.code == sf::Keyboard::Left)
+        {
             requestedDirection = sf::Vector2i(-1, 0);
         }
- 
     }
-
 }
 
-
-void Player::render(sf::RenderWindow& window) {
+void Player::render(sf::RenderWindow &window)
+{
     window.draw(shape);
 }
 
-
-void Player::update(float deltaTime) {
+void Player::update(float deltaTime)
+{
 
     screenPosition.x += currentDirection.x * speed * deltaTime;
     screenPosition.y += currentDirection.y * speed * deltaTime;
@@ -64,9 +67,11 @@ void Player::update(float deltaTime) {
     tilePosition = maze.getTilePosition(screenPosition);
 
     // Handle tunel
-    if (maze.isTunnel(tilePosition)) {
+    if (maze.isTunnel(tilePosition))
+    {
 
-        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0)) {
+        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0))
+        {
 
             sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
 
@@ -74,42 +79,42 @@ void Player::update(float deltaTime) {
             screenPosition = maze.getTileCenter(targetTile);
 
             return;
-
         }
 
-        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0)) {
-            
+        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0))
+        {
+
             sf::Vector2i targetTile(1, tilePosition.y);
 
             tilePosition = targetTile;
             screenPosition = maze.getTileCenter(targetTile);
 
             return;
-
         }
-
     }
-    
+
     sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
 
-    if (!isAtTileCenter(tileCenter)) {
+    if (!isAtTileCenter(tileCenter))
+    {
         return;
     }
 
     updateMovementDirection(maze.getAvailableDirections(tilePosition));
 
-    if (changesMovementAxis()) {
+    if (changesMovementAxis())
+    {
         alignToTileCenter(tileCenter);
     }
 
-    if (stopped()) {
+    if (stopped())
+    {
         alignToLastDirection(tileCenter);
     }
-
 }
 
-
-bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
+bool Player::isAtTileCenter(sf::Vector2f tileCenter) const
+{
 
     float tolerance = 1.f;
 
@@ -117,110 +122,107 @@ bool Player::isAtTileCenter(sf::Vector2f tileCenter) const {
     float positionY = std::abs(screenPosition.y - tileCenter.y);
 
     return positionX < tolerance && positionY < tolerance;
-
 }
 
+void Player::updateMovementDirection(const std::vector<sf::Vector2i> &avalibleDirections)
+{
 
-void Player::updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDirections) {
+    if (currentDirection == requestedDirection)
+    {
 
-    if (currentDirection == requestedDirection) {
-
-        if(!canMoveInDirection(currentDirection, avalibleDirections)) {
+        if (!canMoveInDirection(currentDirection, avalibleDirections))
+        {
 
             lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = sf::Vector2i(0, 0);
-
         }
-
     }
-    
-    else {
 
-        if (canMoveInDirection(requestedDirection, avalibleDirections)) {
-            
+    else
+    {
+
+        if (canMoveInDirection(requestedDirection, avalibleDirections))
+        {
+
             lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = requestedDirection;
-
         }
 
-        else if (!canMoveInDirection(currentDirection, avalibleDirections)) {
+        else if (!canMoveInDirection(currentDirection, avalibleDirections))
+        {
 
             lastDirection = (currentDirection != sf::Vector2i(0, 0)) ? currentDirection : lastDirection;
             currentDirection = sf::Vector2i(0, 0);
-
         }
-
     }
-
 }
-
 
 bool Player::canMoveInDirection(
-    sf::Vector2i direction, 
-    const std::vector<sf::Vector2i>& avalibleDirections
-) {
+    sf::Vector2i direction,
+    const std::vector<sf::Vector2i> &avalibleDirections)
+{
 
     return std::find(
-        avalibleDirections.begin(),
-        avalibleDirections.end(),
-        direction) != avalibleDirections.end();
-
+               avalibleDirections.begin(),
+               avalibleDirections.end(),
+               direction) != avalibleDirections.end();
 }
 
+void Player::alignToTileCenter(sf::Vector2f tileCenter)
+{
 
-void Player::alignToTileCenter(sf::Vector2f tileCenter) {
-
-    if (lastDirection.x != 0) {
+    if (lastDirection.x != 0)
+    {
         screenPosition.x = tileCenter.x;
     }
 
-    if (lastDirection.y != 0) {
+    if (lastDirection.y != 0)
+    {
         screenPosition.y = tileCenter.y;
     }
-    
+
     shape.setPosition(screenPosition);
-
 }
 
+bool Player::changesMovementAxis() const
+{
 
-bool Player::changesMovementAxis() const {
-    
-    return
-        (lastDirection.x != 0 && currentDirection.y != 0) ||
-        (lastDirection.y != 0 && currentDirection.x != 0);
+    return (lastDirection.x != 0 && currentDirection.y != 0) ||
+           (lastDirection.y != 0 && currentDirection.x != 0);
 }
 
-
-bool Player::stopped() const {
+bool Player::stopped() const
+{
     return currentDirection == sf::Vector2i(0, 0);
 }
 
+void Player::alignToLastDirection(sf::Vector2f tileCenter)
+{
 
-void Player::alignToLastDirection(sf::Vector2f tileCenter) {
-
-    if (lastDirection.x != 0) {
+    if (lastDirection.x != 0)
+    {
         screenPosition.x = tileCenter.x;
     }
 
-    if (lastDirection.y != 0) {
+    if (lastDirection.y != 0)
+    {
         screenPosition.y = tileCenter.y;
     }
-    
-    shape.setPosition(screenPosition);
 
+    shape.setPosition(screenPosition);
 }
 
-
-sf::Vector2i Player::getTilePosition() const {
+sf::Vector2i Player::getTilePosition() const
+{
     return tilePosition;
 }
 
-
-sf::Vector2i Player::getCurrentDirection() const {
+sf::Vector2i Player::getCurrentDirection() const
+{
     return currentDirection;
 }
 
-
-sf::Vector2i Player::getLastDirection() const {
+sf::Vector2i Player::getLastDirection() const
+{
     return lastDirection;
 }

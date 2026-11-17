@@ -7,21 +7,20 @@
 #include "Maze.hpp"
 #include "GhostManager.hpp"
 
-class Game {
+class Game
+{
+public:
+    Game();
+    void run();
 
-    public:
-        Game();
-        void run();
+private:
+    void processEvents();
+    void render();
+    void update();
 
-    private:
-        void processEvents();
-        void render();
-        void update();
-
-        sf::RenderWindow window;
-        sf::Clock clock;
-        Maze maze;
-        Player player;
-        GhostManager ghostManager;
-
+    sf::RenderWindow window;
+    sf::Clock clock;
+    Maze maze;
+    Player player;
+    GhostManager ghostManager;
 };

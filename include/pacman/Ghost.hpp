@@ -8,12 +8,13 @@
 
 #include <SFML/Graphics.hpp>
 
-class Ghost {
+class Ghost
+{
 public:
     Ghost(char type, sf::Color color);
 
-    void render(sf::RenderWindow& window) const;
-    void update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile);
+    void render(sf::RenderWindow &window) const;
+    void update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile);
 
     void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPostion);
 
@@ -32,16 +33,15 @@ private:
     sf::Vector2i lastDirection;
     float speed;
 
-    void updateTargetDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile);
+    void updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile);
 
     std::vector<sf::Vector2i> directionOrder = {
-        { 0, -1 }, // UP
-        {-1,  0 }, // LEFT
-        { 0,  1 }, // DOWN
-        { 1,  0 }  // RIGHT
+        {0, -1}, // UP
+        {-1, 0}, // LEFT
+        {0, 1},  // DOWN
+        {1, 0}   // RIGHT
     };
 
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
     void alignToTileCenter(sf::Vector2f tileCenter);
-
 };

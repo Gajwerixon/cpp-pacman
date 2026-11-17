@@ -7,17 +7,18 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Player {
+class Player
+{
 public:
-    Player(const Maze& maze);
+    Player(const Maze &maze);
 
     // Input and update
-    void handleEvents(const sf::Event& event);
-    void updateMovementDirection(const std::vector<sf::Vector2i>& avalibleDirections);
+    void handleEvents(const sf::Event &event);
+    void updateMovementDirection(const std::vector<sf::Vector2i> &avalibleDirections);
     void update(float deltaTime);
 
     // Rendering
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow &window);
 
     // Movement and alignment
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
@@ -45,9 +46,7 @@ private:
 
     bool canMoveInDirection(
         sf::Vector2i direction,
-        const std::vector<sf::Vector2i>& availableDirections
-    );
+        const std::vector<sf::Vector2i> &availableDirections);
 
-    const Maze& maze;
-
+    const Maze &maze;
 };

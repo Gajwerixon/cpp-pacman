@@ -1,6 +1,7 @@
 #pragma once
 
-enum class GhostMode {
+enum class GhostMode
+{
     Scatter,
     Chase,
     Frightened

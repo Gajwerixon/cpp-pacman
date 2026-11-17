@@ -2,45 +2,42 @@
 
 Game::Game()
     : ghostManager(maze, player),
-      player(maze)
+      player(maze) {
+      };
+
+void Game::run()
 {
-};
 
-
-void Game::run() {
-    
     window.create(sf::VideoMode(672, 864), "Pac-Man");
 
-    while (window.isOpen()) {
+    while (window.isOpen())
+    {
 
         processEvents();
         render();
         update();
-
     }
-
 }
 
-
-void Game::processEvents() {
+void Game::processEvents()
+{
 
     sf::Event event;
 
     while (window.pollEvent(event))
     {
-        
-        if (event.type == sf::Event::Closed) {
+
+        if (event.type == sf::Event::Closed)
+        {
             window.close();
         }
-        
-        player.handleEvents(event);
 
+        player.handleEvents(event);
     }
-    
 }
 
-
-void Game::render() {
+void Game::render()
+{
 
     window.clear(sf::Color::Black);
 
@@ -49,15 +46,13 @@ void Game::render() {
     ghostManager.render(window);
 
     window.display();
-
 }
 
-
-void Game::update() {
+void Game::update()
+{
 
     float deltaTime = clock.restart().asSeconds();
 
     player.update(deltaTime);
     ghostManager.update(deltaTime);
-
 }

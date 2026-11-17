@@ -11,29 +11,28 @@ Ghost::Ghost(char type, sf::Color color)
       screenPosition(0.f, 0.f),
       speed(80.f),
       lastDecisionTile(0, 0),
-      lastDirection(0,0)
+      lastDirection(0, 0)
 {
     shape.setFillColor(color);
     shape.setOrigin(12.f, 12.f);
 }
 
-
-void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition) {
+void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition)
+{
 
     this->tilePosition = tilePosition;
     this->screenPosition = screenPosition;
 
     shape.setPosition(screenPosition);
-
 }
 
-
-void Ghost::render(sf::RenderWindow& window) const {
+void Ghost::render(sf::RenderWindow &window) const
+{
     window.draw(shape);
 }
 
-
-void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector2i targetTile) {
+void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile)
+{
 
     screenPosition.x += currentDirection.x * speed * deltaTime;
     screenPosition.y += currentDirection.y * speed * deltaTime;
@@ -43,9 +42,11 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
     tilePosition = maze.getTilePosition(screenPosition);
 
     // Handle tunel
-    if (maze.isTunnel(tilePosition)) {
+    if (maze.isTunnel(tilePosition))
+    {
 
-        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0)) {
+        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0))
+        {
 
             sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
 
@@ -53,71 +54,73 @@ void Ghost::update(float deltaTime, const Maze& maze, GhostMode mode, sf::Vector
             screenPosition = maze.getTileCenter(targetTile);
 
             return;
-
         }
 
-        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0)) {
-            
+        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0))
+        {
+
             sf::Vector2i targetTile(1, tilePosition.y);
 
             tilePosition = targetTile;
             screenPosition = maze.getTileCenter(targetTile);
 
             return;
-
         }
-
     }
 
     // Prevent ghosts from changing direction inside special zones
-    if (maze.isSpecialZone(tilePosition) && currentDirection.x != 0) {
+    if (maze.isSpecialZone(tilePosition) && currentDirection.x != 0)
+    {
         return;
     }
 
     sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
 
-    if (!isAtTileCenter(tileCenter)) {
+    if (!isAtTileCenter(tileCenter))
+    {
         return;
     }
-    
+
     // Choose a new direction only when entering a different tile
-    if (tilePosition != lastDecisionTile) {
+    if (tilePosition != lastDecisionTile)
+    {
 
         lastDecisionTile = tilePosition;
 
-        switch (mode) {
-            case GhostMode::Scatter:
-            case GhostMode::Chase:
-                updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
-                break;
+        switch (mode)
+        {
+        case GhostMode::Scatter:
+        case GhostMode::Chase:
+            updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
+            break;
 
-            case GhostMode::Frightened:
-                // Frightened logic
-                break;
+        case GhostMode::Frightened:
+            // Frightened logic
+            break;
         }
-
     }
-
 }
 
-
-void Ghost::updateTargetDirection(const std::vector<sf::Vector2i>& allowDirections, sf::Vector2i targetTile) {
+void Ghost::updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile)
+{
 
     // The Ghost cannot turn back => removing backward direction
     std::vector<sf::Vector2i> validDirections;
 
-    for (auto direction : allowDirections) {
+    for (auto direction : allowDirections)
+    {
 
-        if (direction != -currentDirection) {
+        if (direction != -currentDirection)
+        {
             validDirections.push_back(direction);
         }
-
     }
 
-    std::vector<int> distances;    
+    std::vector<int> distances;
 
     // Calculate distance from new potential tile to targetTile
-    for (auto direction : validDirections) {
+    for (auto direction : validDirections)
+    {
 
         sf::Vector2i distance;
 
@@ -134,8 +137,10 @@ void Ghost::updateTargetDirection(const std::vector<sf::Vector2i>& allowDirectio
     // Find minimal distance
     int minDistance = distances[0];
 
-    for (int distance : distances) {
-        if (distance < minDistance) {
+    for (int distance : distances)
+    {
+        if (distance < minDistance)
+        {
             minDistance = distance;
         }
     }
@@ -143,25 +148,29 @@ void Ghost::updateTargetDirection(const std::vector<sf::Vector2i>& allowDirectio
     // Find add minimal values (there could be 1 or two minimal values to target tile)
     std::vector<sf::Vector2i> bestDirections;
 
-    for (std::size_t i = 0; i < distances.size(); i++) {
-        if (distances[i] == minDistance) {
+    for (std::size_t i = 0; i < distances.size(); i++)
+    {
+        if (distances[i] == minDistance)
+        {
             bestDirections.push_back(validDirections[i]);
         }
     }
 
-    for (auto priorityDirection : directionOrder) {
-        for (auto bestDirection : bestDirections) {
-            if (priorityDirection == bestDirection) {
+    for (auto priorityDirection : directionOrder)
+    {
+        for (auto bestDirection : bestDirections)
+        {
+            if (priorityDirection == bestDirection)
+            {
                 currentDirection = priorityDirection;
                 return;
             }
         }
     }
-
 }
 
-
-bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const {
+bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const
+{
 
     float tolerance = 1.f;
 
@@ -169,30 +178,30 @@ bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const {
     float positionY = std::abs(screenPosition.y - tileCenter.y);
 
     return positionX < tolerance && positionY < tolerance;
-
 }
 
+void Ghost::alignToTileCenter(sf::Vector2f tileCenter)
+{
 
-void Ghost::alignToTileCenter(sf::Vector2f tileCenter) {
-
-    if (lastDirection.x != 0) {
+    if (lastDirection.x != 0)
+    {
         screenPosition.x = tileCenter.x;
     }
 
-    if (lastDirection.y != 0) {
+    if (lastDirection.y != 0)
+    {
         screenPosition.y = tileCenter.y;
     }
-    
-    shape.setPosition(screenPosition);
 
+    shape.setPosition(screenPosition);
 }
 
-
-char Ghost::getType() const {
+char Ghost::getType() const
+{
     return type;
 }
 
-
-sf::Vector2i Ghost::getTilePosition() const {
+sf::Vector2i Ghost::getTilePosition() const
+{
     return tilePosition;
 }

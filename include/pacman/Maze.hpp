@@ -9,11 +9,12 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Maze {   
+class Maze
+{
 public:
     Maze();
 
-    void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow &window);
 
     sf::Vector2i getPacmanStart() const;
     std::map<char, sf::Vector2i> getGhostStart() const;
@@ -58,5 +59,4 @@ private:
     int specialZone2Y = 23;
     std::vector<sf::Vector2i> specialZoneTiles;
     void initializeSpecialZones();
-
 };
