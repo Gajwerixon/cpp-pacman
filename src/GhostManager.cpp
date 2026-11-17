@@ -182,7 +182,23 @@ sf::Vector2i GhostManager::getInkyTarget() const {
 
 
 sf::Vector2i GhostManager::getClaudeTarget() const {
+    
+    sf::Vector2i playerTilePosition = player.getTilePosition();
+    sf::Vector2i claudeTilePosition = getGhost('c').getTilePosition();
+
+    int squareDistance = 64;
+
+    int dx = playerTilePosition.x - claudeTilePosition.x;
+    int dy = playerTilePosition.y - claudeTilePosition.y;
+
+    int currentDistanceSquared = dx * dx + dy * dy;
+
+    if (currentDistanceSquared < 64) {
+        return ghostConfig.at('c').scatterTarget;
+    }
+
     return player.getTilePosition();
+
 }
 
 
