@@ -23,7 +23,13 @@ public:
     void render(sf::RenderWindow &window);
 
 private:
-    GhostMode currentMode = GhostMode::Frightened;
+    GhostMode currentMode = GhostMode::Scatter;
+    GhostMode previousMode = GhostMode::Chase;
+
+    bool reverseGhost;
+
+    sf::Clock modeClock;
+    sf::Time modeDuration = sf::seconds(10.f);
 
     std::map<char, GhostData> ghostConfig = {
         {'b', {sf::Color(255, 0, 0), {25, -4}}},

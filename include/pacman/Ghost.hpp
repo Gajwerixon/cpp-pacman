@@ -15,7 +15,7 @@ public:
     Ghost(char type, sf::Color color);
 
     void render(sf::RenderWindow &window) const;
-    void update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile);
+    void update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost);
 
     void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPostion);
 
@@ -48,4 +48,6 @@ private:
 
     bool isAtTileCenter(sf::Vector2f tileCenter) const;
     void alignToTileCenter(sf::Vector2f tileCenter);
+
+    bool reversedDirection = false;
 };

@@ -31,7 +31,7 @@ void Ghost::render(sf::RenderWindow &window) const
     window.draw(shape);
 }
 
-void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile)
+void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost)
 {
 
     screenPosition.x += currentDirection.x * speed * deltaTime;

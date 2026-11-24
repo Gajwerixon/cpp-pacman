@@ -1,5 +1,6 @@
 #include "pacman/GhostManager.hpp"
 #include <stdexcept>
+#include <iostream>
 
 GhostManager::GhostManager(const Maze &maze, const Player &player)
     : maze(maze), player(player)
@@ -23,6 +24,28 @@ GhostManager::GhostManager(const Maze &maze, const Player &player)
 void GhostManager::update(float deltaTime)
 {
 
+    if (modeClock.getElapsedTime() >= modeDuration)
+    {
+        if (currentMode == GhostMode::Chase)
+        {
+            currentMode = GhostMode::Scatter;
+        }
+        else
+        {
+            currentMode = GhostMode::Chase;
+        }
+
+        modeClock.restart();
+    }
+
+    bool reverseGhost = false;
+
+    if (previousMode != currentMode)
+    {
+        reverseGhost = previousMode != GhostMode::Frightened;
+        previousMode = currentMode;
+    }
+
     for (auto &ghost : ghosts)
     {
 
@@ -37,7 +60,18 @@ void GhostManager::update(float deltaTime)
             targetTile = getChaseTarget(ghost);
         }
 
-        ghost.update(deltaTime, maze, currentMode, targetTile);
+        switch (currentMode)
+        {
+        case GhostMode::Scatter:
+            std::cout << "Scatter\n";
+            break;
+
+        case GhostMode::Chase:
+            std::cout << "Chase\n";
+            break;
+        }
+
+        ghost.update(deltaTime, maze, currentMode, targetTile, reverseGhost);
     }
 }
 
