@@ -24,7 +24,7 @@ public:
 
 private:
     GhostMode currentMode = GhostMode::Scatter;
-    GhostMode previousMode = GhostMode::Chase;
+    GhostMode previousMode = GhostMode::Scatter;
 
     bool reverseGhost;
 

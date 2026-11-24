@@ -41,6 +41,28 @@ void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector
 
     tilePosition = maze.getTilePosition(screenPosition);
 
+    if (reverseGhost)
+    {
+        shouldReverseDirection = true;
+    }
+
+    if (shouldReverseDirection)
+    {
+        sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
+
+        if (!isAtTileCenter(tileCenter))
+        {
+            return;
+        }
+
+        currentDirection = currentDirection * -1;
+        lastDirection = currentDirection;
+        shouldReverseDirection = false;
+
+        lastDecisionTile = tilePosition;
+        return;
+    }
+
     // Handle tunel
     if (maze.isTunnel(tilePosition))
     {
