@@ -36,9 +36,8 @@ void GhostManager::update(float deltaTime)
         {
             targetTile = getChaseTarget(ghost);
         }
-        else if (currentMode == GhostMode::Chase)
 
-            ghost.update(deltaTime, maze, currentMode, targetTile);
+        ghost.update(deltaTime, maze, currentMode, targetTile);
     }
 }
 

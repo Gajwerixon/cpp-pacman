@@ -95,7 +95,7 @@ void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector
             break;
 
         case GhostMode::Frightened:
-            // Frightened logic
+            updateFrightenedDirection(maze.getAvailableDirections(tilePosition));
             break;
         }
     }
@@ -167,6 +167,26 @@ void Ghost::updateTargetDirection(const std::vector<sf::Vector2i> &allowDirectio
             }
         }
     }
+}
+
+void Ghost::updateFrightenedDirection(const std::vector<sf::Vector2i> &allowDirections)
+{
+    // The Ghost cannot turn back => removing backward direction
+    std::vector<sf::Vector2i> validDirections;
+
+    for (auto direction : allowDirections)
+    {
+
+        if (direction != -currentDirection)
+        {
+            validDirections.push_back(direction);
+        }
+    }
+
+    std::uniform_int_distribution<int> distribution(
+        0, static_cast<int>(validDirections.size()) - 1);
+
+    currentDirection = validDirections[distribution(randomGenerator)];
 }
 
 bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const

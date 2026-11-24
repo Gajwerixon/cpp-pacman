@@ -5,6 +5,7 @@
 #include "pacman/GhostMode.hpp"
 
 #include <vector>
+#include <random>
 
 #include <SFML/Graphics.hpp>
 
@@ -34,6 +35,9 @@ private:
     float speed;
 
     void updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile);
+    void updateFrightenedDirection(const std::vector<sf::Vector2i> &allowDirections);
+
+    std::mt19937 randomGenerator{std::random_device{}()};
 
     std::vector<sf::Vector2i> directionOrder = {
         {0, -1}, // UP
