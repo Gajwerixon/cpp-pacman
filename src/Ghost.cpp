@@ -3,6 +3,10 @@
 #include <iostream>
 #include <cmath>
 
+// ========================================
+// Constructor and Initialization
+// ========================================
+
 Ghost::Ghost(char type, sf::Color color)
     : type(type),
       shape(12.f),
@@ -26,101 +30,103 @@ void Ghost::setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosit
     shape.setPosition(screenPosition);
 }
 
+// ========================================
+// Rendering
+// ========================================
+
 void Ghost::render(sf::RenderWindow &window) const
 {
     window.draw(shape);
 }
 
+// ========================================
+// Update and Movement
+// ========================================
+
 void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost)
 {
+    // Move the Ghost on the screen
+    move(deltaTime, maze);
 
+    // After mode's change (in most cases) Ghost should reverse the currentDirection
+    if (handleReversal(maze, reverseGhost))
+    {
+        return;
+    }
+
+    // Handle tunel
+    if (handleTunnel(maze))
+    {
+        return;
+    }
+
+    // Handle special zones
+    if (handleSpecialZones(maze))
+    {
+        return;
+    }
+
+    // Only choose a new direction at the tile center and once per tile
+    if (!isAtTileCenter(maze.getTileCenter(tilePosition)) || tilePosition == lastDecisionTile)
+    {
+        return;
+    }
+
+    lastDecisionTile = tilePosition;
+
+    // Update the ghost's direction based on its current mode and target tile
+    switch (mode)
+    {
+    case GhostMode::Scatter:
+    case GhostMode::Chase:
+        updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
+        break;
+
+    case GhostMode::Frightened:
+        updateFrightenedDirection(maze.getAvailableDirections(tilePosition));
+        break;
+    }
+}
+
+void Ghost::move(float deltaTime, const Maze &maze)
+{
     screenPosition.x += currentDirection.x * speed * deltaTime;
     screenPosition.y += currentDirection.y * speed * deltaTime;
 
     shape.setPosition(screenPosition);
 
     tilePosition = maze.getTilePosition(screenPosition);
+}
 
+// ========================================
+// Direction and Behavior
+// ========================================
+
+bool Ghost::handleReversal(const Maze &maze, bool reverseGhost)
+{
     if (reverseGhost)
     {
         shouldReverseDirection = true;
     }
 
-    if (shouldReverseDirection)
+    if (!shouldReverseDirection)
     {
-        sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
+        return false;
+    }
 
-        if (!isAtTileCenter(tileCenter))
-        {
-            return;
-        }
+    sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
+
+    if (isAtTileCenter(tileCenter))
+    {
 
         currentDirection = currentDirection * -1;
         lastDirection = currentDirection;
         shouldReverseDirection = false;
 
         lastDecisionTile = tilePosition;
-        return;
     }
 
-    // Handle tunel
-    if (maze.isTunnel(tilePosition))
-    {
-
-        if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0))
-        {
-
-            sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
-
-            tilePosition = targetTile;
-            screenPosition = maze.getTileCenter(targetTile);
-
-            return;
-        }
-
-        if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0))
-        {
-
-            sf::Vector2i targetTile(1, tilePosition.y);
-
-            tilePosition = targetTile;
-            screenPosition = maze.getTileCenter(targetTile);
-
-            return;
-        }
-    }
-
-    // Prevent ghosts from changing direction inside special zones
-    if (maze.isSpecialZone(tilePosition) && currentDirection.x != 0)
-    {
-        return;
-    }
-
-    sf::Vector2f tileCenter = maze.getTileCenter(tilePosition);
-
-    if (!isAtTileCenter(tileCenter))
-    {
-        return;
-    }
-
-    // Choose a new direction only when entering a different tile
-    if (tilePosition != lastDecisionTile)
-    {
-
-        lastDecisionTile = tilePosition;
-
-        switch (mode)
-        {
-        case GhostMode::Scatter:
-        case GhostMode::Chase:
-            updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
-            break;
-
-        case GhostMode::Frightened:
-            updateFrightenedDirection(maze.getAvailableDirections(tilePosition));
-            break;
-        }
-    }
+    return true;
 }
 
 void Ghost::updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile)
@@ -211,6 +217,51 @@ void Ghost::updateFrightenedDirection(const std::vector<sf::Vector2i> &allowDire
     currentDirection = validDirections[distribution(randomGenerator)];
 }
 
+// ========================================
+// Maze Interactions
+// ========================================
+
+bool Ghost::handleTunnel(const Maze &maze)
+{
+    if (!maze.isTunnel(tilePosition))
+    {
+        return false;
+    }
+
+    if (tilePosition.x == 0 && currentDirection != sf::Vector2i(1, 0))
+    {
+
+        sf::Vector2i targetTile(maze.getWidth() - 1, tilePosition.y);
+
+        tilePosition = targetTile;
+        screenPosition = maze.getTileCenter(targetTile);
+    }
+
+    if (tilePosition.x == maze.getWidth() - 1 && currentDirection != sf::Vector2i(-1, 0))
+    {
+
+        sf::Vector2i targetTile(1, tilePosition.y);
+
+        tilePosition = targetTile;
+        screenPosition = maze.getTileCenter(targetTile);
+    }
+
+    return true;
+}
+
+bool Ghost::handleSpecialZones(const Maze &maze)
+{
+    if (maze.isSpecialZone(tilePosition) && currentDirection.x != 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+// ========================================
+// Position Helpers
+// ========================================
+
 bool Ghost::isAtTileCenter(sf::Vector2f tileCenter) const
 {
 
@@ -237,6 +288,10 @@ void Ghost::alignToTileCenter(sf::Vector2f tileCenter)
 
     shape.setPosition(screenPosition);
 }
+
+// ========================================
+// Getters
+// ========================================
 
 char Ghost::getType() const
 {

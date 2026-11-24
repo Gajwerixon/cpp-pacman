@@ -1,7 +1,7 @@
+
 #pragma once
 
 #include "pacman/Maze.hpp"
-#include "pacman/Player.hpp"
 #include "pacman/GhostMode.hpp"
 
 #include <vector>
@@ -12,17 +12,22 @@
 class Ghost
 {
 public:
+    // Constructor
     Ghost(char type, sf::Color color);
 
+    // Initialization
+    void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition);
+
+    // Rendering and update
     void render(sf::RenderWindow &window) const;
     void update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost);
 
-    void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPostion);
-
+    // Getters
     char getType() const;
     sf::Vector2i getTilePosition() const;
 
 private:
+    // Ghost properties
     char type;
     sf::CircleShape shape;
 
@@ -33,6 +38,15 @@ private:
     sf::Vector2i currentDirection;
     sf::Vector2i lastDirection;
     float speed;
+
+    // Movement
+    void move(float deltaTime, const Maze &maze);
+    bool isAtTileCenter(sf::Vector2f tileCenter) const;
+    void alignToTileCenter(sf::Vector2f tileCenter);
+
+    // Direction and behavior
+    bool shouldReverseDirection = false;
+    bool handleReversal(const Maze &maze, bool reverseGhost);
 
     void updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile);
     void updateFrightenedDirection(const std::vector<sf::Vector2i> &allowDirections);
@@ -46,8 +60,7 @@ private:
         {1, 0}   // RIGHT
     };
 
-    bool isAtTileCenter(sf::Vector2f tileCenter) const;
-    void alignToTileCenter(sf::Vector2f tileCenter);
-
-    bool shouldReverseDirection = false;
+    // Maze interactions
+    bool handleTunnel(const Maze &maze);
+    bool handleSpecialZones(const Maze &maze);
 };
