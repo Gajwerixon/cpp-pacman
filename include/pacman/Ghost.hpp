@@ -1,8 +1,8 @@
-
 #pragma once
 
 #include "pacman/Maze.hpp"
 #include "pacman/GhostMode.hpp"
+#include "pacman/GhostStatus.hpp"
 
 #include <vector>
 #include <random>
@@ -13,7 +13,7 @@ class Ghost
 {
 public:
     // Constructor
-    Ghost(char type, sf::Color color);
+    Ghost(char type, sf::Color color, GhostStatus status);
 
     // Initialization
     void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition);
@@ -30,6 +30,7 @@ private:
     // Ghost properties
     char type;
     sf::CircleShape shape;
+    GhostStatus status;
 
     sf::Vector2i tilePosition;
     sf::Vector2i lastDecisionTile;

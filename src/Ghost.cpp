@@ -7,7 +7,7 @@
 // Constructor and Initialization
 // ========================================
 
-Ghost::Ghost(char type, sf::Color color)
+Ghost::Ghost(char type, sf::Color color, GhostStatus status)
     : type(type),
       shape(12.f),
       currentDirection(1, 0),
@@ -15,7 +15,8 @@ Ghost::Ghost(char type, sf::Color color)
       screenPosition(0.f, 0.f),
       speed(80.f),
       lastDecisionTile(0, 0),
-      lastDirection(0, 0)
+      lastDirection(0, 0),
+      status(status)
 {
     shape.setFillColor(color);
     shape.setOrigin(12.f, 12.f);

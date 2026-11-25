@@ -11,7 +11,9 @@ GhostManager::GhostManager(const Maze &maze, const Player &player)
 
         const GhostData &data = ghostConfig.at(type);
 
-        Ghost ghost(type, data.color);
+        GhostStatus status = type != 'b' ? GhostStatus::InHouse : GhostStatus::Active;
+
+        Ghost ghost(type, data.color, status);
 
         ghost.setStartPosition(
             tilePosition,

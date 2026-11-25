@@ -7,6 +7,7 @@
 #include "pacman/Maze.hpp"
 #include "pacman/Player.hpp"
 #include "pacman/GhostMode.hpp"
+#include "pacman/GhostStatus.hpp"
 
 struct GhostData
 {
