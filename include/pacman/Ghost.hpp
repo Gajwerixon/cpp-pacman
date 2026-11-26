@@ -50,6 +50,10 @@ private:
     bool shouldReverseDirection = false;
     bool handleReversal(const Maze &maze, bool reverseGhost);
 
+    void updateActive(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost);
+    void updateInHouse(float deltaTime, const Maze &maze);
+    void updateEaten(float deltaTime, const Maze &maze, sf::Vector2i targetTile);
+
     void updateTargetDirection(const std::vector<sf::Vector2i> &allowDirections, sf::Vector2i targetTile);
     void updateFrightenedDirection(const std::vector<sf::Vector2i> &allowDirections);
 

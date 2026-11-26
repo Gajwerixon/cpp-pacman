@@ -46,6 +46,22 @@ void Ghost::render(sf::RenderWindow &window) const
 
 void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost)
 {
+    switch (status)
+    {
+    case GhostStatus::Active:
+        updateActive(deltaTime, maze, mode, targetTile, reverseGhost);
+        break;
+    case GhostStatus::InHouse:
+        updateInHouse(deltaTime, maze);
+        break;
+    case GhostStatus::Eaten:
+        updateEaten(deltaTime, maze, targetTile);
+        break;
+    }
+}
+
+void Ghost::updateActive(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector2i targetTile, bool reverseGhost)
+{
     // Move the Ghost on the screen
     move(deltaTime, maze);
 
@@ -87,6 +103,16 @@ void Ghost::update(float deltaTime, const Maze &maze, GhostMode mode, sf::Vector
         updateFrightenedDirection(maze.getAvailableDirections(tilePosition));
         break;
     }
+}
+
+void Ghost::updateInHouse(float deltaTime, const Maze &maze)
+{
+    // logic
+}
+
+void Ghost::updateEaten(float deltaTime, const Maze &maze, sf::Vector2i targetTile)
+{
+    // logic
 }
 
 void Ghost::move(float deltaTime, const Maze &maze)
