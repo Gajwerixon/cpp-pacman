@@ -303,3 +303,8 @@ sf::Vector2i Ghost::getTilePosition() const
 {
     return tilePosition;
 }
+
+GhostStatus Ghost::getStatus() const
+{
+    return status;
+}

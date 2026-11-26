@@ -25,6 +25,7 @@ public:
     // Getters
     char getType() const;
     sf::Vector2i getTilePosition() const;
+    GhostStatus getStatus() const;
 
 private:
     // Ghost properties

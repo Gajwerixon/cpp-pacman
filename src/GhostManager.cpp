@@ -41,7 +41,6 @@ void GhostManager::update(float deltaTime)
     }
 
     bool reverseGhost = false;
-
     if (previousMode != currentMode)
     {
         reverseGhost = previousMode != GhostMode::Frightened;
@@ -51,29 +50,42 @@ void GhostManager::update(float deltaTime)
     for (auto &ghost : ghosts)
     {
 
-        sf::Vector2i targetTile;
+        switch (ghost.getStatus())
+        {
 
-        if (currentMode == GhostMode::Scatter)
+        case GhostStatus::Active:
         {
-            targetTile = ghostConfig.at(ghost.getType()).scatterTarget;
-        }
-        else if (currentMode == GhostMode::Chase)
-        {
-            targetTile = getChaseTarget(ghost);
-        }
+            sf::Vector2i targetTile;
 
-        switch (currentMode)
-        {
-        case GhostMode::Scatter:
-            std::cout << "Scatter\n";
+            if (currentMode == GhostMode::Scatter)
+            {
+                targetTile = ghostConfig.at(ghost.getType()).scatterTarget;
+            }
+            else if (currentMode == GhostMode::Chase)
+            {
+                targetTile = getChaseTarget(ghost);
+            }
+            else if (currentMode == GhostMode::Frightened)
+            {
+                targetTile = sf::Vector2i(0, 0);
+            }
+
+            ghost.update(deltaTime, maze, currentMode, targetTile, reverseGhost);
             break;
+        }
 
-        case GhostMode::Chase:
-            std::cout << "Chase\n";
+        case GhostStatus::InHouse:
+        {
+            // InHouse logic
             break;
         }
 
-        ghost.update(deltaTime, maze, currentMode, targetTile, reverseGhost);
+        case GhostStatus::Eaten:
+        {
+            // Eaten logic
+            break;
+        }
+        }
     }
 }
 
