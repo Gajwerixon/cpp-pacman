@@ -59,4 +59,12 @@ private:
     int specialZone2Y = 23;
     std::vector<sf::Vector2i> specialZoneTiles;
     void initializeSpecialZones();
+
+    int houseTop = 12;
+    int houseBottom = 16;
+    int houseCenter = 13;
+
+    int getHouseTop() const;
+    int getHouseBottom() const;
+    int getHouseCenter() const;
 };

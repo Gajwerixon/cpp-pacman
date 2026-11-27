@@ -13,11 +13,11 @@ Maze::Maze()
                   "######.##### ## #####.######",
                   "     #.##### ## #####.#     ",
                   "     #.##     b    ##.#     ",
-                  "     #.## ######## ##.#     ",
+                  "     #.## ######## ##.#     ", // 12
                   "######.## #      # ##.######",
                   "      .   #i p c #   .      ",
                   "######.## #      # ##.######",
-                  "     #.## ######## ##.#     ",
+                  "     #.## ######## ##.#     ", // 16
                   "     #.##          ##.#     ",
                   "     #.## ######## ##.#     ",
                   "######.## ######## ##.######",
@@ -244,4 +244,19 @@ bool Maze::isSpecialZone(sf::Vector2i tilePosition) const
 int Maze::getWidth(void) const
 {
     return mazeLayout[0].size();
+}
+
+int Maze::getHouseTop() const
+{
+    return houseTop;
+}
+
+int Maze::getHouseBottom() const
+{
+    return houseBottom;
+}
+
+int Maze::getHouseCenter() const
+{
+    return houseCenter;
 }
