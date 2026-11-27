@@ -13,7 +13,7 @@ class Ghost
 {
 public:
     // Constructor
-    Ghost(char type, sf::Color color, GhostStatus status);
+    Ghost(char type, sf::Color color, GhostStatus status, sf::Vector2i currentDirection, sf::Vector2i scatterTarget);
 
     // Initialization
     void setStartPosition(sf::Vector2i tilePosition, sf::Vector2f screenPosition);
@@ -40,6 +40,8 @@ private:
     sf::Vector2i currentDirection;
     sf::Vector2i lastDirection;
     float speed;
+
+    sf::Vector2i scatterTarget;
 
     // Movement
     void move(float deltaTime, const Maze &maze);

@@ -7,16 +7,17 @@
 // Constructor and Initialization
 // ========================================
 
-Ghost::Ghost(char type, sf::Color color, GhostStatus status)
+Ghost::Ghost(char type, sf::Color color, GhostStatus status, sf::Vector2i currentDirection, sf::Vector2i scatterTarget)
     : type(type),
       shape(12.f),
-      currentDirection(1, 0),
+      currentDirection(currentDirection),
       tilePosition(0, 0),
       screenPosition(0.f, 0.f),
       speed(80.f),
       lastDecisionTile(0, 0),
       lastDirection(0, 0),
-      status(status)
+      status(status),
+      scatterTarget(scatterTarget)
 {
     shape.setFillColor(color);
     shape.setOrigin(12.f, 12.f);
@@ -95,10 +96,11 @@ void Ghost::updateActive(float deltaTime, const Maze &maze, GhostMode mode, sf::
     switch (mode)
     {
     case GhostMode::Scatter:
+        updateTargetDirection(maze.getAvailableDirections(tilePosition), scatterTarget);
+        break;
     case GhostMode::Chase:
         updateTargetDirection(maze.getAvailableDirections(tilePosition), targetTile);
         break;
-
     case GhostMode::Frightened:
         updateFrightenedDirection(maze.getAvailableDirections(tilePosition));
         break;

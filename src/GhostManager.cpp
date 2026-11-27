@@ -9,11 +9,9 @@ GhostManager::GhostManager(const Maze &maze, const Player &player)
     for (const auto &[type, tilePosition] : maze.getGhostStart())
     {
 
-        const GhostData &data = ghostConfig.at(type);
+        const GhostsConfig &data = ghostConfigs.at(type);
 
-        GhostStatus status = type != 'b' ? GhostStatus::InHouse : GhostStatus::Active;
-
-        Ghost ghost(type, data.color, status);
+        Ghost ghost(type, data.color, data.status, data.startDirection, data.scatterTarget);
 
         ghost.setStartPosition(
             tilePosition,
@@ -55,20 +53,7 @@ void GhostManager::update(float deltaTime)
 
         case GhostStatus::Active:
         {
-            sf::Vector2i targetTile;
-
-            if (currentMode == GhostMode::Scatter)
-            {
-                targetTile = ghostConfig.at(ghost.getType()).scatterTarget;
-            }
-            else if (currentMode == GhostMode::Chase)
-            {
-                targetTile = getChaseTarget(ghost);
-            }
-            else if (currentMode == GhostMode::Frightened)
-            {
-                targetTile = sf::Vector2i(0, 0);
-            }
+            sf::Vector2i targetTile = currentMode == GhostMode::Chase ? getChaseTarget(ghost) : sf::Vector2i(0, 0);
 
             ghost.update(deltaTime, maze, currentMode, targetTile, reverseGhost);
             break;
@@ -242,7 +227,7 @@ sf::Vector2i GhostManager::getClaudeTarget() const
 
     if (currentDistanceSquared < squareDistance)
     {
-        return ghostConfig.at('c').scatterTarget;
+        return ghostConfigs.at('c').scatterTarget;
     }
 
     return player.getTilePosition();
